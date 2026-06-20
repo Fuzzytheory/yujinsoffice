@@ -273,10 +273,34 @@
       gap: 14px;
       margin-top: 14px;
     }
+    .stills-5 { grid-template-columns: repeat(3, 1fr); }
+    .stills-5 .still:nth-child(4),
+    .stills-5 .still:nth-child(5) { grid-column: span 1; }
     .still {
       height: 180px;
       border-radius: 10px;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+    }
+    .still-photo {
+      overflow: hidden;
+      background: #111;
+    }
+    .still-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s ease;
+    }
+    .still-photo img:hover { transform: scale(1.04); }
+
+    /* 5-stills layout */
+    .stills-grid:has(.still:nth-child(5)) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .stills-grid:has(.still:nth-child(5)) .still:nth-child(4),
+    .stills-grid:has(.still:nth-child(5)) .still:nth-child(5) {
+      grid-column: span 1;
     }
 
     /* ── Prev / Next ── */
@@ -364,6 +388,7 @@
       {
         slug: 'living-under', title: 'Living Under', year: '2020', type: 'Short Film', runtime: '26:50', tone: 2,
         genre: 'Drama', rating: 'PG-13',
+        stills: ['stills/living-under-1.jpg','stills/living-under-2.jpg','stills/living-under-3.jpg','stills/living-under-4.jpg','stills/living-under-5.jpg'],
         festivals: ['Seoul Independent Film Festival 2020 (46th) — Short Competition, World Premiere'],
         synopsis: "Jina is hiding a secret that could change her life, and a father who's about to ruin it. One night, her best friend visits, and the truth about Jina's poverty comes out the hard way.",
         credits: [
@@ -437,9 +462,13 @@
     }).join('');
 
     // Stills HTML
-    var stillsHTML = [grad(p.tone, 1), grad(p.tone, -1), grad(p.tone, 2)].map(function (g) {
-      return '<div class="still" style="background:' + g + '"></div>';
-    }).join('');
+    var stillsHTML = (p.stills && p.stills.length)
+      ? p.stills.map(function (src) {
+          return '<div class="still still-photo"><img src="' + src + '" alt="Still from ' + p.title + '"></div>';
+        }).join('')
+      : [grad(p.tone, 1), grad(p.tone, -1), grad(p.tone, 2)].map(function (g) {
+          return '<div class="still" style="background:' + g + '"></div>';
+        }).join('');
 
     var filmScreen = p.vimeoId
       ? '<div class="film-screen-btn">' +
@@ -492,7 +521,7 @@
 
       '<div class="stills-section">' +
         '<div class="section-label">Stills</div>' +
-        '<div class="stills-grid">' + stillsHTML + '</div>' +
+        '<div class="stills-grid' + (p.stills && p.stills.length === 5 ? ' stills-5' : '') + '">' + stillsHTML + '</div>' +
       '</div>' +
 
       '<div class="nav-row">' +
