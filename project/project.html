@@ -125,26 +125,6 @@
       align-items: center;
       justify-content: center;
     }
-    .film-screen-embed {
-      position: relative;
-      width: 100%;
-    }
-    .film-screen-embed iframe {
-      display: block;
-      width: 100%;
-      height: 500px;
-      border: 0;
-    }
-    .video-pw {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,.55);
-      text-align: center;
-      padding: 6px 14px 8px;
-      background: rgba(0,0,0,.18);
-    }
     .play-btn {
       width: 74px; height: 74px;
       border-radius: 50%;
@@ -157,7 +137,70 @@
       padding-left: 5px;
     }
 
-    /* ── Tagline ── */
+    /* ── Watch button ── */
+    .film-screen-btn {
+      height: 430px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .watch-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn-mount {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: rgba(0,0,0,.35);
+      border: 2px solid rgba(255,255,255,.12);
+      box-shadow:
+        0 8px 0 rgba(0,0,0,.5),
+        0 16px 32px rgba(0,0,0,.4),
+        inset 0 1px 0 rgba(255,255,255,.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .08s ease, box-shadow .08s ease;
+    }
+    .watch-btn:hover .btn-mount {
+      transform: translateY(-3px);
+      box-shadow:
+        0 11px 0 rgba(0,0,0,.5),
+        0 20px 36px rgba(0,0,0,.45),
+        inset 0 1px 0 rgba(255,255,255,.12);
+    }
+    .watch-btn.pressed .btn-mount {
+      transform: translateY(6px);
+      box-shadow:
+        0 2px 0 rgba(0,0,0,.5),
+        0 4px 10px rgba(0,0,0,.3),
+        inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .btn-face {
+      color: rgba(255,255,255,.92);
+      font-size: 30px;
+      padding-left: 6px;
+    }
+    .btn-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.85);
+    }
+    .btn-pw {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.35);
+      margin-top: -8px;
+    }
     .tagline {
       font-family: 'Space Mono', monospace;
       font-size: 13px;
@@ -384,11 +427,14 @@
     }).join('');
 
     var filmScreen = p.vimeoId
-      ? '<div class="film-screen-embed">' +
-          '<iframe src="https://player.vimeo.com/video/' + p.vimeoId + '?title=0&byline=0&portrait=0&color=2F2DE4" ' +
-          'frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>' +
-        '</div>' +
-        '<div class="video-pw">Password: ' + p.vimeoPassword + '</div>'
+      ? '<div class="film-screen-btn">' +
+          '<a class="watch-btn" href="https://vimeo.com/' + p.vimeoId + '" target="_blank" rel="noopener" ' +
+             'onclick="var el=this;el.classList.add(\'pressed\');setTimeout(function(){el.classList.remove(\'pressed\');},400);">' +
+            '<div class="btn-mount"><div class="btn-face">►</div></div>' +
+            '<div class="btn-label">Watch Film</div>' +
+            '<div class="btn-pw">Password · ' + p.vimeoPassword + '</div>' +
+          '</a>' +
+        '</div>'
       : '<div class="film-screen"><div class="play-btn">►</div></div>';
 
     var festivalsHTML = (p.festivals && p.festivals.length)
