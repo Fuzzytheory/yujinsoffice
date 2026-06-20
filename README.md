@@ -22,4 +22,4 @@ The design medium is **HTML/CSS/JS** — these are prototypes, not production co
 
 - `README.md` — this file
 - `chats/` — conversation transcripts (read these!)
-- `project/` — the `StarzX Torchlight Casting Call` project files (HTML prototypes, assets, components)
+- `project/` — the yujinsoffice portfolio website (about, projects, upcoming, shop)
