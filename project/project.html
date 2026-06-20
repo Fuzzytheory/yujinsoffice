@@ -125,6 +125,26 @@
       align-items: center;
       justify-content: center;
     }
+    .film-screen-embed {
+      position: relative;
+      width: 100%;
+    }
+    .film-screen-embed iframe {
+      display: block;
+      width: 100%;
+      height: 500px;
+      border: 0;
+    }
+    .video-pw {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.55);
+      text-align: center;
+      padding: 6px 14px 8px;
+      background: rgba(0,0,0,.18);
+    }
     .play-btn {
       width: 74px; height: 74px;
       border-radius: 50%;
@@ -135,6 +155,16 @@
       color: #fff;
       font-size: 20px;
       padding-left: 5px;
+    }
+
+    /* ── Tagline ── */
+    .tagline {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #888;
+      margin-top: 10px;
     }
 
     /* ── Details grid ── */
@@ -171,6 +201,26 @@
     }
     .credit-key { font-size: 12px; color: #9a9a9a; letter-spacing: .12em; }
     .credit-val { font-size: 15px; color: #111; text-align: right; }
+
+    /* ── Festivals ── */
+    .festivals-section { margin-top: 36px; }
+    .festival-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .festival-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid #111;
+      padding: 8px 14px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .festival-badge::before {
+      content: '★';
+      color: #2F2DE4;
+      font-size: 13px;
+    }
 
     /* ── Stills ── */
     .stills-section { margin-top: 46px; }
@@ -248,9 +298,25 @@
         credits: [{ k: 'Director', v: 'Yujin Kim' }, { k: 'Writer', v: 'Yujin Kim' }, { k: 'Format', v: '16mm' }, { k: 'Aspect', v: '2.39 : 1' }, { k: 'Year', v: '2026' }]
       },
       {
-        slug: 'the-mushroom', title: 'The Mushroom', year: '2025', type: 'Short Film', runtime: '09:48', tone: 1,
-        synopsis: 'Something quiet grows in the dark between two strangers sharing a basement apartment. A patient, near-wordless study of proximity, damp, and the slow turn toward each other.',
-        credits: [{ k: 'Director', v: 'Yujin Kim' }, { k: 'Writer', v: 'Yujin Kim' }, { k: 'Format', v: 'Digital' }, { k: 'Aspect', v: '1.33 : 1' }, { k: 'Year', v: '2025' }]
+        slug: 'the-mushroom', title: 'The Mushroom', year: '2025', type: 'Short Film', runtime: '06:01', tone: 1,
+        tagline: 'Meet the silver lining fungus',
+        genre: 'Dark Comedy', rating: 'PG',
+        vimeoId: '1108093665', vimeoPassword: 'fsufilm',
+        festivals: ['Sunscreen Film Festival 2026 — Short Selection'],
+        synopsis: 'Summer just got fired and made the brilliant decision to eat a mushroom growing by her toilet. The next morning, it starts talking from inside her gut, threatening to kill her unless she returns it to its "mother soil." With no plan and a hostile parasite, she hits the road.',
+        credits: [
+          { k: 'Writer / Director', v: 'Yujin Kim' },
+          { k: 'Producer', v: 'Yuqi Hu' },
+          { k: 'Cinematographer', v: 'Numark Ricafranca' },
+          { k: 'Production Designer', v: 'Ying Shi' },
+          { k: 'Editor', v: 'Cole Taylor' },
+          { k: 'Sound Designer', v: 'Sheridan Skinner' },
+          { k: 'Format', v: 'Digital' },
+          { k: 'Aspect', v: '1.66 : 1' },
+          { k: 'Genre', v: 'Dark Comedy' },
+          { k: 'Rating', v: 'PG' },
+          { k: 'Year', v: '2025' }
+        ]
       },
       {
         slug: 'living-under', title: 'Living Under', year: '2019', type: 'Short Film', runtime: '21:05', tone: 2,
@@ -317,18 +383,36 @@
       return '<div class="still" style="background:' + g + '"></div>';
     }).join('');
 
+    var filmScreen = p.vimeoId
+      ? '<div class="film-screen-embed">' +
+          '<iframe src="https://player.vimeo.com/video/' + p.vimeoId + '?title=0&byline=0&portrait=0&color=2F2DE4" ' +
+          'frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>' +
+        '</div>' +
+        '<div class="video-pw">Password: ' + p.vimeoPassword + '</div>'
+      : '<div class="film-screen"><div class="play-btn">►</div></div>';
+
+    var festivalsHTML = (p.festivals && p.festivals.length)
+      ? '<div class="festivals-section">' +
+          '<div class="section-label">Festival Selection</div>' +
+          '<div class="festival-list">' +
+            p.festivals.map(function (f) { return '<div class="festival-badge">' + f + '</div>'; }).join('') +
+          '</div>' +
+        '</div>'
+      : '';
+
     document.getElementById('main').innerHTML =
       '<div class="title-row">' +
         '<div>' +
           '<div class="now-showing">Now Showing &nbsp;·&nbsp; Project ' + String(idx + 1).padStart(2, '0') + '</div>' +
           '<h1 class="proj-h1" style="font-size:' + titleFs + '">' + p.title + '</h1>' +
+          (p.tagline ? '<div class="tagline">' + p.tagline + '</div>' : '') +
         '</div>' +
         '<div class="proj-meta-right">' + p.year + ' &nbsp;·&nbsp; ' + p.type + ' &nbsp;·&nbsp; ' + p.runtime + '</div>' +
       '</div>' +
 
       '<div class="film-frame" style="background:' + grad(p.tone, 0) + '">' +
         '<div class="sprockets">' + sprocketsHTML() + '</div>' +
-        '<div class="film-screen"><div class="play-btn">►</div></div>' +
+        filmScreen +
         '<div class="sprockets">' + sprocketsHTML() + '</div>' +
       '</div>' +
 
@@ -342,6 +426,8 @@
           '<div class="credits-table">' + creditsHTML + '</div>' +
         '</div>' +
       '</div>' +
+
+      festivalsHTML +
 
       '<div class="stills-section">' +
         '<div class="section-label">Stills</div>' +
