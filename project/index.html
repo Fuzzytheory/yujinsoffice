@@ -85,14 +85,11 @@
     /* ── Plate ── */
     .plate {
       position: absolute;
-      inset: 0;
+      top: 0; right: 0; bottom: 0; left: 0;
       border-radius: 50%;
-      background: radial-gradient(circle at 50% 50%, #232320 0 27%, #181816 27% 92%, #0a0a08 92% 100%);
+      background: radial-gradient(circle at 50% 50%, #232320 0%, #232320 27%, #181816 27%, #181816 92%, #0a0a08 92%, #0a0a08 100%);
       box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.06),
-        inset 0 0 120px rgba(0,0,0,.55),
         0 50px 100px -36px rgba(0,0,0,.55);
-      will-change: transform;
     }
     .hub {
       position: absolute;
@@ -100,7 +97,7 @@
       transform: translate(-50%, -50%);
       width: 30%; height: 30%;
       border-radius: 50%;
-      background: radial-gradient(circle at 50% 50%, #2b2b28 0 62%, #1a1a18 100%);
+      background: radial-gradient(circle at 50% 50%, #2b2b28 0%, #2b2b28 62%, #1a1a18 100%);
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.07), inset 0 0 30px rgba(0,0,0,.5);
     }
     .top-nub {
@@ -115,7 +112,7 @@
     /* ── Window layer ── */
     .layer {
       position: absolute;
-      inset: 0;
+      top: 0; right: 0; bottom: 0; left: 0;
       opacity: 0;
       transition: opacity .3s;
     }
@@ -461,8 +458,11 @@
     layout();
     window.addEventListener('resize', layout);
     updateCenter();
-    requestAnimationFrame(function () { layerEl.style.opacity = '1'; });
-    requestAnimationFrame(loop);
+    requestAnimationFrame(function () {
+      layout(); // retry after first paint in case clientWidth was 0
+      layerEl.style.opacity = '1';
+      requestAnimationFrame(loop);
+    });
   })();
   </script>
 
