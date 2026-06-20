@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop — yujinsoffice</title>
+  <meta name="description" content="yujinsoffice shop — coming soon">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #fff; height: 100%; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: #2F2DE4; color: #fff; }
+
+    /* ── Header ── */
+    .site-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 36px 16px;
+      border-bottom: 2px solid #111;
+    }
+    .brand {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: 103px;
+      letter-spacing: -.01em;
+      line-height: 1;
+    }
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 21px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .topnav .sep { opacity: .3; }
+    .topnav a { transition: color .2s; }
+    .topnav a:hover { color: #2F2DE4; }
+    .topnav a.active { color: #2F2DE4; font-weight: 700; }
+
+    /* ── Center content ── */
+    .center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 64px 36px;
+      gap: 28px;
+    }
+    .big-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: #2F2DE4;
+    }
+    .big-heading {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: clamp(72px, 12vw, 160px);
+      letter-spacing: -.03em;
+      line-height: .88;
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      max-width: 36ch;
+      line-height: 1.8;
+    }
+    .notify-form {
+      display: flex;
+      gap: 0;
+      margin-top: 8px;
+    }
+    .notify-input {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: .1em;
+      padding: 14px 18px;
+      border: 2px solid #111;
+      border-right: none;
+      background: #fff;
+      color: #111;
+      outline: none;
+      width: 280px;
+    }
+    .notify-input::placeholder { color: #9a9a9a; }
+    .notify-input:focus { border-color: #2F2DE4; }
+    .notify-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: 14px 22px;
+      background: #111;
+      color: #fff;
+      border: 2px solid #111;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      white-space: nowrap;
+    }
+    .notify-btn:hover { background: #2F2DE4; border-color: #2F2DE4; }
+
+    /* ── Footer ── */
+    footer {
+      background: #111;
+      color: #fff;
+      padding: 28px 36px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    footer .dim { opacity: .55; }
+
+    /* ── Mobile ── */
+    @media (max-width: 680px) {
+      .site-head { flex-wrap: wrap; gap: 10px; padding: 16px 20px 12px; }
+      .brand { font-size: clamp(46px, 15vw, 80px); }
+      .topnav { font-size: 12px; gap: 9px; flex-wrap: wrap; }
+      .notify-form { flex-direction: column; }
+      .notify-input { width: 100%; border-right: 2px solid #111; border-bottom: none; }
+      .notify-input:focus { border-color: #2F2DE4; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-head">
+    <a href="index.html" class="brand">yujinsoffice</a>
+    <nav class="topnav">
+      <a href="about.html">About</a>
+      <span class="sep">/</span>
+      <a href="index.html">Projects</a>
+      <span class="sep">/</span>
+      <a href="upcoming.html">Upcoming</a>
+      <span class="sep">/</span>
+      <a href="shop.html" class="active">Shop</a>
+    </nav>
+  </header>
+
+  <div class="center">
+    <div class="big-label">Shop — Coming Soon</div>
+    <h1 class="big-heading">Opening<br>Soon</h1>
+    <p class="sub">Prints, zines, and film objects.<br>Leave your email and you'll be first to know.</p>
+    <form class="notify-form" onsubmit="handleSubmit(event)">
+      <input class="notify-input" type="email" id="email-input" placeholder="your@email.com" autocomplete="email" required>
+      <button class="notify-btn" type="submit">Notify Me</button>
+    </form>
+  </div>
+
+  <footer>
+    <span>yujinsoffice</span>
+    <span class="dim">© 2026 — Filmmaker &amp; Director, Seoul</span>
+  </footer>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      var btn = e.target.querySelector('.notify-btn');
+      btn.textContent = 'Done ✓';
+      btn.style.background = '#1a1a1a';
+      btn.style.borderColor = '#1a1a1a';
+      btn.disabled = true;
+      document.getElementById('email-input').disabled = true;
+    }
+  </script>
+
+</body>
+</html>

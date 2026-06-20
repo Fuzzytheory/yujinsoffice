@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&amp;family=Archivo+Narrow:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#ffffff;}
+  body{font-family:'Helvetica Neue',Helvetica,'Archivo',Arial,sans-serif;color:#111;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:#2F2DE4;color:#fff;}
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="--accent:#2F2DE4;height:100vh;background:#ffffff;color:#111;display:flex;flex-direction:column;padding:22px 36px 18px;">
+
+  <header style="display:flex;align-items:center;justify-content:flex-start;gap:24px;padding-bottom:14px;border-bottom:2px solid #111;flex:none;">
+    <a href="yujinsoffice.dc.html" style="font-family:'Helvetica Neue','Archivo Narrow',sans-serif;font-stretch:condensed;font-weight:700;font-size:103px;letter-spacing:-.01em;line-height:1;">yujinsoffice</a>
+  </header>
+
+  <nav style="display:flex;justify-content:flex-end;align-items:baseline;gap:clamp(20px,2.8vw,40px);padding-top:12px;flex:none;font-family:'Helvetica Neue','Archivo Narrow',sans-serif;font-stretch:condensed;font-weight:700;font-size:clamp(34px,5.2vw,68px);line-height:1;letter-spacing:-.01em;">
+    <a href="About.dc.html" style="color:#111;transition:color .2s;" style-hover="{ color: 'var(--accent,#2F2DE4)' }">about</a>
+    <a href="yujinsoffice.dc.html" style="color:var(--accent,#2F2DE4);">projects</a>
+    <a href="#" style="color:#111;transition:color .2s;" style-hover="{ color: 'var(--accent,#2F2DE4)' }">upcoming</a>
+    <a href="#" style="color:#111;transition:color .2s;" style-hover="{ color: 'var(--accent,#2F2DE4)' }">shop</a>
+  </nav>
+
+  <section style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0;">
+    <div ref="{{ reelRef }}" onPointerDown="{{ onReelPointerDown }}" style="position:relative;width:min(72vmin,calc(100vh - 330px),820px);height:min(72vmin,calc(100vh - 330px),820px);flex:none;touch-action:none;user-select:none;cursor:grab;">
+
+      <div ref="{{ plateRef }}" style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 50%, #232320 0 27%, #181816 27% 92%, #0a0a08 92% 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.06), inset 0 0 120px rgba(0,0,0,.55), 0 50px 100px -36px rgba(0,0,0,.55);will-change:transform;">
+        <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:30%;height:30%;border-radius:50%;background:radial-gradient(circle at 50% 50%, #2b2b28 0 62%, #1a1a18 100%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07), inset 0 0 30px rgba(0,0,0,.5);"></div>
+        <div style="position:absolute;top:1.4%;left:50%;transform:translateX(-50%);width:6.5%;height:2.6%;background:#cdccc8;border-radius:0 0 7px 7px;"></div>
+        <sc-for list="{{ reelTabs }}" as="t" hint-placeholder-count="12">
+          <div ref="{{ tabRef }}" data-i="{{ t.i }}" style="position:absolute;left:50%;top:50%;width:13px;height:26px;margin:-13px 0 0 -6.5px;background:#fcfcfb;border-radius:2px;box-shadow:0 1px 4px rgba(0,0,0,.16);"></div>
+        </sc-for>
+      </div>
+
+      <div ref="{{ layerRef }}" style="position:absolute;inset:0;opacity:{{ layerOpacity }};">
+        <sc-for list="{{ reelWindows }}" as="w" hint-placeholder-count="12">
+          <div ref="{{ winRef }}" data-i="{{ w.i }}" onClick="{{ w.onSelect }}" style="position:absolute;left:50%;top:50%;width:92px;height:92px;margin:-46px 0 0 -46px;border-radius:10px;overflow:hidden;cursor:pointer;background:{{ w.fill }};box-shadow:inset 0 0 0 1px rgba(255,255,255,.4), 0 6px 16px rgba(0,0,0,.45);will-change:transform;">
+            <div style="position:absolute;top:8px;left:9px;right:9px;font-family:'Space Mono',monospace;font-size:clamp(7px,0.98vmin,10px);line-height:1.12;letter-spacing:.06em;text-transform:uppercase;color:{{ w.numColor }};">{{ w.role }}</div>
+            <div style="position:absolute;bottom:6px;right:8px;font-family:'Space Mono',monospace;font-size:clamp(8px,1vmin,11px);letter-spacing:.06em;color:{{ w.numColor }};">{{ w.num }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52%;text-align:center;pointer-events:none;">
+        <div style="font-family:'Space Mono',monospace;font-size:clamp(10px,1.4vmin,14px);letter-spacing:.34em;text-transform:uppercase;color:#c9c9c9;">Now Viewing</div>
+        <div style="font-family:'Helvetica Neue','Archivo Narrow',sans-serif;font-stretch:condensed;font-weight:700;font-size:{{ activeProject.titleFs }};line-height:.95;text-transform:uppercase;letter-spacing:-.005em;color:#fff;margin:clamp(8px,1.4vmin,16px) 0 0;">{{ activeProject.title }}</div>
+        <div style="font-family:'Space Mono',monospace;font-size:clamp(10px,1.3vmin,13px);letter-spacing:.16em;text-transform:uppercase;color:#c9c9c9;margin:clamp(8px,1.4vmin,14px) 0 0;">{{ activeProject.year }} &nbsp;·&nbsp; {{ activeProject.type }} &nbsp;·&nbsp; {{ activeProject.runtime }}</div>
+        <a href="{{ activeProject.href }}" style="pointer-events:auto;display:inline-flex;align-items:center;gap:8px;margin-top:clamp(14px,2vmin,22px);padding:11px 22px;background:var(--accent,#2F2DE4);border:2px solid var(--accent,#2F2DE4);font-family:'Space Mono',monospace;font-size:clamp(10px,1.2vmin,13px);letter-spacing:.16em;text-transform:uppercase;color:#fff;transition:opacity .2s;" style-hover="{ opacity: '.85' }">View Project →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer style="display:flex;justify-content:space-between;align-items:center;flex:none;font-family:'Space Mono',monospace;font-size:clamp(9px,1.1vmin,12px);letter-spacing:.22em;text-transform:uppercase;color:#9a9a9a;padding-top:10px;border-top:1px solid #e6e6e2;">
+    <span>Seoul, Korea</span>
+    <span>Drag the reel · tap a frame</span>
+    <span>Reel 01 / 07</span>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:880},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F2DE4&quot;,&quot;options&quot;:[&quot;#2F2DE4&quot;,&quot;#111111&quot;,&quot;#c0392b&quot;,&quot;#1f8a5b&quot;],&quot;tsType&quot;:&quot;string&quot;},&quot;autoSpin&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;reelSpeed&quot;:{&quot;editor&quot;:&quot;float&quot;,&quot;default&quot;:1,&quot;min&quot;:0.2,&quot;max&quot;:3,&quot;step&quot;:0.1,&quot;tsType&quot;:&quot;number&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.projects = [
+      { slug:"twisted-scissors", title:"Twisted Scissors", year:"2026", type:"Short Film", runtime:"14:20", tone:0 },
+      { slug:"the-mushroom", title:"The Mushroom", year:"2025", type:"Short Film", runtime:"09:48", tone:1 },
+      { slug:"living-under", title:"Living Under", year:"2019", type:"Short Film", runtime:"21:05", tone:2 },
+      { slug:"recommendation", title:"Recommendation", year:"2018", type:"Short Film", runtime:"12:30", tone:0 },
+      { slug:"narco-saints", title:"Narco Saints", year:"2022", type:"Netflix Series", runtime:"6 Episodes", tone:1 },
+      { slug:"ballerina", title:"Ballerina", year:"2023", type:"Netflix Film", runtime:"1:32", tone:2 },
+      { slug:"badland-hunters", title:"Badland Hunters", year:"2024", type:"Netflix Film", runtime:"1:47", tone:0 }
+    ];
+    this.state = { active: 0, ready: false };
+    this.WIN = this.projects.length;
+    this.R = 232;
+    this.winSize = 92;
+    this.ACTIVE = 1.14;
+    this.IDLE = 0.9;
+    this.theta = 0;
+    this.target = 0;
+    this.mode = "auto";
+    this.dragged = false;
+    this.winEls = [];
+    this.tabEls = [];
+    this.roleMap = {
+      "twisted-scissors": "Writer · Director",
+      "the-mushroom": "Writer · Director",
+      "living-under": "Writer · Director",
+      "recommendation": "Writer · Director",
+      "narco-saints": "AD Dept.",
+      "ballerina": "AD Dept.",
+      "badland-hunters": "VFX PM"
+    };
+    this.baseAngles = [];
+    const step = 360/this.WIN;
+    for (let i=0;i<this.WIN;i++) this.baseAngles.push(i*step - 90);
+  }
+
+  componentDidMount(){
+    if (this.props.accentColor && this.root) this.root.style.setProperty("--accent", this.props.accentColor);
+    this.layout();
+    requestAnimationFrame(() => this.setState({ ready: true }));
+    this.raf = requestAnimationFrame(this.loop);
+    this._resize = () => this.layout();
+    window.addEventListener("resize", this._resize);
+  }
+  componentWillUnmount(){
+    cancelAnimationFrame(this.raf);
+    clearTimeout(this.holdTimer);
+    window.removeEventListener("resize", this._resize);
+    window.removeEventListener("pointermove", this._move);
+    window.removeEventListener("pointerup", this._up);
+  }
+
+  layout(){
+    if (!this.reel) return;
+    const size = this.reel.clientWidth;
+    if (!size) return;
+    this.R = size * 0.375;
+    this.winSize = size * 0.15;
+    const half = this.winSize / 2;
+    for (let i=0;i<this.WIN;i++){
+      const el = this.winEls[i];
+      if (el){
+        el.style.width = this.winSize + "px";
+        el.style.height = this.winSize + "px";
+        el.style.margin = `-${half}px 0 0 -${half}px`;
+        el.style.borderRadius = (size*0.018) + "px";
+      }
+      const tab = this.tabEls[i];
+      if (tab){
+        const tw = size*0.022, th = size*0.045, tr = size*0.47;
+        tab.style.width = tw + "px";
+        tab.style.height = th + "px";
+        tab.style.margin = `-${th/2}px 0 0 -${tw/2}px`;
+        tab.style.transform = `rotate(${i*(360/this.WIN) + (180/this.WIN)}deg) translateY(${-tr}px)`;
+      }
+    }
+    this.renderPositions();
+  }
+
+  norm(d){ d = ((d + 180) % 360 + 360) % 360 - 180; return d; }
+  speed(){ return 0.1 * (this.props.reelSpeed ?? 1); }
+
+  loop = () => {
+    if (this.mode === "auto"){
+      if (this.props.autoSpin ?? true) this.theta -= this.speed();
+    } else if (this.mode === "snap"){
+      const d = this.target - this.theta;
+      if (Math.abs(d) < 0.15){
+        this.theta = this.target; this.mode = "hold";
+        clearTimeout(this.holdTimer);
+        this.holdTimer = setTimeout(()=>{ if (this.mode === "hold") this.mode = "auto"; }, 1700);
+      } else { this.theta += d * 0.16; }
+    }
+    this.renderPositions();
+    this.raf = requestAnimationFrame(this.loop);
+  };
+
+  renderPositions(){
+    if (this.plate) this.plate.style.transform = `rotate(${this.theta}deg)`;
+    let topIdx = 0, best = 1e9;
+    for (let i=0;i<this.WIN;i++){
+      const d = Math.abs(this.norm(-90 - (this.baseAngles[i] + this.theta)));
+      if (d < best){ best = d; topIdx = i; }
+    }
+    for (let i=0;i<this.WIN;i++){
+      const el = this.winEls[i];
+      if (!el) continue;
+      const a = (this.baseAngles[i] + this.theta) * Math.PI / 180;
+      const x = this.R * Math.cos(a), y = this.R * Math.sin(a);
+      const active = (i === topIdx);
+      el.style.transform = `translate(${x}px, ${y}px) scale(${active ? this.ACTIVE : this.IDLE})`;
+      el.style.zIndex = active ? "6" : "1";
+      el.style.opacity = active ? "1" : "0.72";
+      el.style.boxShadow = active
+        ? "inset 0 0 0 2px #fff, 0 0 0 2px var(--accent,#2F2DE4), 0 14px 30px rgba(0,0,0,.30)"
+        : "inset 0 0 0 2px rgba(255,255,255,.82), 0 6px 14px rgba(0,0,0,.16)";
+    }
+    const proj = topIdx;
+    if (proj !== this.state.active && this.mode !== "snap") this.setState({ active: proj });
+  }
+
+  snapTo(idx){ this.target = this.theta + this.norm(-90 - (this.baseAngles[idx] + this.theta)); this.mode = "snap"; }
+  snapNearest(){
+    let idx = 0, best = 1e9;
+    for (let i=0;i<this.WIN;i++){
+      const d = Math.abs(this.norm(-90 - (this.baseAngles[i] + this.theta)));
+      if (d < best){ best = d; idx = i; }
+    }
+    this.snapTo(idx);
+  }
+  selectProject = (p) => {
+    this.setState({ active: p });
+    this.snapTo(p);
+  };
+
+  onPointerDown = (e) => {
+    if (e.target.closest("a, button")) return;
+    this.mode = "drag"; this.dragged = false;
+    const r = this.reel.getBoundingClientRect();
+    this.cx = r.left + r.width/2; this.cy = r.top + r.height/2;
+    this.startAng = Math.atan2(e.clientY - this.cy, e.clientX - this.cx);
+    this.startTheta = this.theta;
+    if (this.reel) this.reel.style.cursor = "grabbing";
+    window.addEventListener("pointermove", this._move);
+    window.addEventListener("pointerup", this._up);
+  };
+  _move = (e) => {
+    if (this.mode !== "drag") return;
+    const a = Math.atan2(e.clientY - this.cy, e.clientX - this.cx);
+    const delta = (a - this.startAng) * 180 / Math.PI;
+    if (Math.abs(delta) > 3) this.dragged = true;
+    this.theta = this.startTheta + delta;
+  };
+  _up = () => {
+    window.removeEventListener("pointermove", this._move);
+    window.removeEventListener("pointerup", this._up);
+    if (this.reel) this.reel.style.cursor = "grab";
+    this.snapNearest();
+    setTimeout(()=>{ this.dragged = false; }, 0);
+  };
+
+  fill(tone){
+    return ["#f2f1ee", "#aeadaa", "#5e5d5a"][tone];
+  }
+  numColor(tone){
+    return tone === 2 ? "rgba(255,255,255,.72)" : "rgba(20,20,18,.5)";
+  }
+
+  renderVals(){
+    const p = this.projects, a = this.state.active, ap = p[a];
+    const reelWindows = [];
+    for (let i=0;i<this.WIN;i++){
+      reelWindows.push({ i, fill: this.fill(p[i].tone), numColor: this.numColor(p[i].tone), role: this.roleMap[p[i].slug] || "", num: String(i+1).padStart(2,"0"), onSelect: () => { if (this.dragged) return; this.selectProject(i); } });
+    }
+    const reelTabs = [];
+    for (let i=0;i<this.WIN;i++) reelTabs.push({ i });
+    return {
+      rootRef: (el) => { this.root = el; if (el && this.props.accentColor) el.style.setProperty("--accent", this.props.accentColor); },
+      reelRef: (el) => { this.reel = el; },
+      plateRef: (el) => { this.plate = el; },
+      layerRef: (el) => { this.layer = el; },
+      winRef: (el) => { if (el) this.winEls[+el.dataset.i] = el; },
+      tabRef: (el) => { if (el) this.tabEls[+el.dataset.i] = el; },
+      onReelPointerDown: this.onPointerDown,
+      reelWindows, reelTabs,
+      layerOpacity: this.state.ready ? "1" : "0",
+      activeProject: { title: ap.title, year: ap.year, type: ap.type, runtime: ap.runtime, href: `Project.dc.html?p=${ap.slug}`, titleFs: (ap.title.split(/\s+/).reduce((m,w)=>Math.max(m,w.length),0) >= 13 ? "clamp(26px,3.9vmin,46px)" : "clamp(32px,5.4vmin,64px)") }
+    };
+  }
+}
+</script>
+</body>
+</html>

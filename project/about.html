@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — yujinsoffice</title>
+  <meta name="description" content="Yujin Kim — Korean filmmaker & director. MFA FSU, AD dept., VFX PM, writer-director.">
+  <meta property="og:title" content="About — yujinsoffice">
+  <meta property="og:description" content="Yujin Kim — Korean filmmaker & director">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #fff; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, 'Archivo', Arial, sans-serif;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    p { margin: 0; }
+    ::selection { background: #2F2DE4; color: #fff; }
+
+    /* ── Header ── */
+    .site-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 36px 16px;
+      border-bottom: 2px solid #111;
+    }
+    .brand {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: 103px;
+      letter-spacing: -.01em;
+      line-height: 1;
+    }
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 21px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .topnav .sep { opacity: .3; }
+    .topnav a { transition: color .2s; }
+    .topnav a:hover { color: #2F2DE4; }
+    .topnav a.active { color: #2F2DE4; font-weight: 700; }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      max-width: 1760px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 56px 48px 88px;
+    }
+    .three-col {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: clamp(28px, 3vw, 68px);
+      align-items: stretch;
+      justify-content: space-between;
+    }
+
+    /* ── LEFT: Photobooth chute ── */
+    .booth-col {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 480px;
+    }
+    .stage {
+      position: relative;
+      aspect-ratio: 900 / 1592;
+      width: 100%;
+      background: #0f1f9e;
+      box-shadow: 0 30px 72px -24px rgba(13, 22, 110, .6);
+      overflow: hidden;
+    }
+    .booth-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .strip-slot {
+      position: absolute;
+      left: 0;
+      top: 38%;
+      width: 100%;
+      height: 56%;
+      overflow: hidden;
+    }
+    .filmstrip {
+      position: absolute;
+      left: 37.4%;
+      top: 2.9%;
+      width: 26.9%;
+      height: auto;
+      transform-origin: 50% -25%;
+      filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .62));
+      will-change: transform;
+    }
+
+    /* ── MIDDLE: Intro + Inquiries ── */
+    .intro-col {
+      flex: 1.7 1 0;
+      min-width: 0;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 40px;
+    }
+    .eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: #2F2DE4;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 22px;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #222;
+    }
+    .tag-hl {
+      background: #2F2DE4;
+      color: #fff;
+      padding: 7px 12px;
+    }
+    .tag {
+      border: 1.5px solid #111;
+      padding: 7px 12px;
+    }
+    .bio {
+      margin-top: 30px;
+      max-width: 64ch;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      font-size: 21px;
+      line-height: 1.7;
+      color: #333;
+    }
+    .bio .accent { color: #2F2DE4; font-weight: 600; }
+
+    /* ── Direct Inquiries ── */
+    .inq-heading {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin: 0 0 16px;
+      color: #111;
+      border-bottom: 2px solid #111;
+      padding-bottom: 8px;
+    }
+    .inq-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 28px 40px;
+    }
+    .contact-block {
+      flex: 1 1 280px;
+      min-width: 240px;
+    }
+    .contact-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      margin-bottom: 6px;
+    }
+    .contact-email {
+      display: block;
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 600;
+      font-size: 26px;
+      letter-spacing: .01em;
+      transition: color .2s;
+      word-break: break-all;
+    }
+    .contact-email:hover { color: #2F2DE4; }
+    .contact-ig {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #ddd;
+      margin-top: 14px;
+      padding: 12px 0 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .contact-ig:hover { color: #2F2DE4; }
+    .btn-touch {
+      flex: 0 0 auto;
+      display: block;
+      text-align: center;
+      background: #111;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 18px 34px;
+      border: 2px solid #111;
+      transition: background .2s, color .2s;
+    }
+    .btn-touch:hover { background: #fff; color: #111; }
+
+    /* ── RIGHT: Portrait ── */
+    .portrait-col {
+      flex: 1 1 0;
+      min-width: 0;
+      max-width: 480px;
+      align-self: center;
+    }
+    .portrait-col figure { margin: 0; }
+    .portrait-wrap {
+      position: relative;
+      aspect-ratio: 900 / 1592;
+      width: 100%;
+      background: #eceae5;
+      overflow: hidden;
+      box-shadow: 0 18px 40px -20px rgba(0, 0, 0, .4);
+    }
+    .portrait-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    figcaption {
+      margin-top: 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #111;
+      color: #fff;
+      padding: 28px 36px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    footer .dim { opacity: .55; }
+
+    /* ── Mobile ── */
+    @media (max-width: 680px) {
+      .site-head {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 16px 20px 12px;
+      }
+      .brand { font-size: clamp(46px, 15vw, 80px); }
+      .topnav { font-size: 12px; gap: 9px; flex-wrap: wrap; }
+      main { padding: 32px 20px 56px; }
+      .three-col { flex-direction: column; }
+      .booth-col,
+      .portrait-col { max-width: 100%; }
+      .intro-col { align-self: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-head">
+    <a href="index.html" class="brand">yujinsoffice</a>
+    <nav class="topnav">
+      <a href="about.html" class="active">About</a>
+      <span class="sep">/</span>
+      <a href="index.html">Projects</a>
+      <span class="sep">/</span>
+      <a href="upcoming.html">Upcoming</a>
+      <span class="sep">/</span>
+      <a href="shop.html">Shop</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="three-col">
+
+      <!-- LEFT: Photobooth chute -->
+      <div class="booth-col">
+        <div class="stage">
+          <img class="booth-bg" src="assets/about-bg.jpg" alt="yujinsoffice stories chute">
+          <div class="strip-slot">
+            <img class="filmstrip" src="assets/filmstrip-v2.png" alt="Film strip: Acting, AD Dept., VFX PM, Directing">
+          </div>
+        </div>
+      </div>
+
+      <!-- MIDDLE: Intro + Direct Inquiries -->
+      <div class="intro-col">
+
+        <div>
+          <div class="eyebrow">About — 01 &nbsp;·&nbsp; Depth across the craft</div>
+          <div class="tags">
+            <span class="tag-hl">Yujin Kim</span>
+            <span class="tag">Korea × USA</span>
+            <span class="tag">SSU · FSU</span>
+          </div>
+          <div class="bio">
+            <p>Yujin Kim is a Korean filmmaker who first fell in love with directing through acting. Determined to learn the craft from every angle before stepping behind the camera, she spent two years in the AD department on Korean film sets, then moved into post-production as a VFX project manager.</p>
+            <p>She recently completed her MFA in Directing at Florida State University's College of Motion Picture Arts. Having worked in Korea's commercial film industry and trained in the American filmmaking system, Yujin can adapt to nearly any set or environment. Her ultimate goal is to become the Korean <span class="accent">Edgar Wright</span> or <span class="accent">Guy Ritchie</span>.</p>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="inq-heading">Direct Inquiries</h2>
+          <div class="inq-row">
+            <div class="contact-block">
+              <div class="contact-label">Email</div>
+              <a href="mailto:ynujinkim@gmail.com" class="contact-email">ynujinkim@gmail.com</a>
+              <a href="https://instagram.com/acteebunny" target="_blank" rel="noopener" class="contact-ig">
+                <span>Instagram</span>
+                <span>@acteebunny ↗</span>
+              </a>
+            </div>
+            <a href="mailto:ynujinkim@gmail.com" class="btn-touch">Get in touch →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Portrait -->
+      <div class="portrait-col">
+        <figure>
+          <div class="portrait-wrap">
+            <img src="assets/yujin-portrait.jpeg" alt="Yujin Kim">
+          </div>
+          <figcaption>
+            <span>Yujin Kim</span>
+            <span>FL '26</span>
+          </figcaption>
+        </figure>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <span>yujinsoffice</span>
+    <span class="dim">© 2026 — Filmmaker &amp; Director, Seoul</span>
+  </footer>
+
+  <script>
+    (function () {
+      var el = document.querySelector('.filmstrip');
+      if (!el || typeof el.animate !== 'function') return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      el.animate([
+        { offset: 0,    transform: 'translateY(-124%) rotate(0deg)',   easing: 'cubic-bezier(.4,0,.7,.45)' },
+        { offset: 0.6,  transform: 'translateY(2.6%) rotate(1deg)',    easing: 'cubic-bezier(.32,.55,.4,1)' },
+        { offset: 0.76, transform: 'translateY(-1.2%) rotate(-.6deg)' },
+        { offset: 0.88, transform: 'translateY(.6%) rotate(.3deg)' },
+        { offset: 1,    transform: 'translateY(0) rotate(0deg)' }
+      ], { duration: 1450, delay: 380, fill: 'both' });
+    })();
+  </script>
+
+</body>
+</html>

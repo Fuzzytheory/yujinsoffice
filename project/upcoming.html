@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upcoming — yujinsoffice</title>
+  <meta name="description" content="Yujin Kim — upcoming projects in development">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #fff; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    p { margin: 0; }
+    ::selection { background: #2F2DE4; color: #fff; }
+
+    /* ── Header ── */
+    .site-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px 36px 16px;
+      border-bottom: 2px solid #111;
+    }
+    .brand {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: 103px;
+      letter-spacing: -.01em;
+      line-height: 1;
+    }
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 21px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .topnav .sep { opacity: .3; }
+    .topnav a { transition: color .2s; }
+    .topnav a:hover { color: #2F2DE4; }
+    .topnav a.active { color: #2F2DE4; font-weight: 700; }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 72px 36px 96px;
+    }
+
+    /* ── Page header ── */
+    .page-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: #2F2DE4;
+      margin-bottom: 18px;
+    }
+    .page-heading {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: clamp(64px, 9vw, 120px);
+      line-height: .9;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      margin: 0 0 56px;
+    }
+
+    /* ── Projects list ── */
+    .upcoming-list { border-top: 2px solid #111; }
+    .upcoming-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 28px 0;
+      border-bottom: 1px solid #e0e0dc;
+    }
+    .upcoming-item:last-child { border-bottom: 2px solid #111; }
+    .item-left { display: flex; align-items: baseline; gap: 28px; }
+    .item-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .18em;
+      color: #9a9a9a;
+      flex: none;
+      width: 28px;
+    }
+    .item-title {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: clamp(26px, 3.6vw, 48px);
+      letter-spacing: -.01em;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    .item-right {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex: none;
+    }
+    .item-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+    }
+    .item-status {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #2F2DE4;
+      padding: 5px 10px;
+    }
+    .item-status.tbd {
+      background: transparent;
+      color: #9a9a9a;
+      border: 1px solid #ddd;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #111;
+      color: #fff;
+      padding: 28px 36px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    footer .dim { opacity: .55; }
+
+    /* ── Mobile ── */
+    @media (max-width: 680px) {
+      .site-head { flex-wrap: wrap; gap: 10px; padding: 16px 20px 12px; }
+      .brand { font-size: clamp(46px, 15vw, 80px); }
+      .topnav { font-size: 12px; gap: 9px; flex-wrap: wrap; }
+      main { padding: 40px 20px 64px; }
+      .upcoming-item { flex-direction: column; gap: 12px; }
+      .item-left { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-head">
+    <a href="index.html" class="brand">yujinsoffice</a>
+    <nav class="topnav">
+      <a href="about.html">About</a>
+      <span class="sep">/</span>
+      <a href="index.html">Projects</a>
+      <span class="sep">/</span>
+      <a href="upcoming.html" class="active">Upcoming</a>
+      <span class="sep">/</span>
+      <a href="shop.html">Shop</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-eyebrow">Upcoming — In Development</div>
+    <h1 class="page-heading">What's<br>Next</h1>
+
+    <div class="upcoming-list">
+
+      <div class="upcoming-item">
+        <div class="item-left">
+          <span class="item-num">01</span>
+          <span class="item-title">Untitled Feature</span>
+        </div>
+        <div class="item-right">
+          <span class="item-tag">Feature Film &nbsp;·&nbsp; Writer · Director</span>
+          <span class="item-status">In Development</span>
+        </div>
+      </div>
+
+      <div class="upcoming-item">
+        <div class="item-left">
+          <span class="item-num">02</span>
+          <span class="item-title">TBA Short</span>
+        </div>
+        <div class="item-right">
+          <span class="item-tag">Short Film &nbsp;·&nbsp; Writer · Director</span>
+          <span class="item-status tbd">TBA</span>
+        </div>
+      </div>
+
+      <div class="upcoming-item">
+        <div class="item-left">
+          <span class="item-num">03</span>
+          <span class="item-title">TBA</span>
+        </div>
+        <div class="item-right">
+          <span class="item-tag">TBA</span>
+          <span class="item-status tbd">TBA</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <span>yujinsoffice</span>
+    <span class="dim">© 2026 — Filmmaker &amp; Director, Seoul</span>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Narrow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#ffffff;}
+  body{font-family:'Space Mono',monospace;color:#111;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:#2F2DE4;color:#fff;}
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="--accent:#2F2DE4;min-height:100vh;background:#ffffff;color:#111;display:flex;flex-direction:column;">
+
+  <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;border-bottom:2px solid #111;padding:22px 36px 16px;">
+    <a href="yujinsoffice.dc.html" style="font-family:'Helvetica Neue','Archivo Narrow',sans-serif;font-stretch:condensed;font-weight:700;font-size:103px;letter-spacing:-.01em;line-height:1;">yujinsoffice</a>
+    <nav style="display:flex;align-items:center;gap:16px;font-family:'Space Mono',monospace;font-size:21px;letter-spacing:.2em;text-transform:uppercase;">
+      <a href="About.dc.html" style="transition:color .2s;" style-hover="{ color: 'var(--accent,#2F2DE4)' }">About</a>
+      <span style="opacity:.3;">/</span>
+      <a href="yujinsoffice.dc.html" style="color:var(--accent,#2F2DE4);font-weight:700;">Projects</a>
+      <span style="opacity:.3;">/</span>
+      <a href="#" style="transition:color .2s;" style-hover="{ color: 'var(--accent,#2F2DE4)' }">Upcoming</a>
+      <span style="opacity:.3;">/</span>
+      <a href="#" style="transition:color .2s;" style-hover="{ color: 'var(--accent,#2F2DE4)' }">Shop</a>
+    </nav>
+  </header>
+
+  <main style="flex:1;max-width:1280px;width:100%;margin:0 auto;padding:46px 36px 64px;">
+
+  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;">
+    <div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent,#2F2DE4);">Now Showing &nbsp;·&nbsp; Project {{ project.num }}</div>
+      <h1 style="font-family:'Helvetica Neue','Archivo Narrow',sans-serif;font-stretch:condensed;font-weight:700;font-size:{{ project.titleFs }};line-height:.86;letter-spacing:-.02em;text-transform:uppercase;margin:10px 0 0;">{{ project.title }}</h1>
+    </div>
+    <div style="font-family:'Space Mono',monospace;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#222;text-align:right;white-space:nowrap;">{{ project.year }} &nbsp;·&nbsp; {{ project.type }} &nbsp;·&nbsp; {{ project.runtime }}</div>
+  </div>
+
+  <div style="position:relative;margin-top:30px;border-radius:14px;overflow:hidden;background:{{ project.grad }};box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);">
+    <div style="display:flex;justify-content:space-between;padding:8px 14px;background:rgba(0,0,0,.18);">
+      <sc-for list="{{ sprockets }}" as="s" hint-placeholder-count="22"><span style="width:11px;height:15px;background:rgba(255,255,255,.85);border-radius:2px;"></span></sc-for>
+    </div>
+    <div style="height:430px;display:flex;align-items:center;justify-content:center;">
+      <div style="width:74px;height:74px;border-radius:50%;border:1.5px solid rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;padding-left:5px;">►</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;padding:8px 14px;background:rgba(0,0,0,.18);">
+      <sc-for list="{{ sprockets }}" as="s" hint-placeholder-count="22"><span style="width:11px;height:15px;background:rgba(255,255,255,.85);border-radius:2px;"></span></sc-for>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:48px;margin-top:46px;align-items:start;">
+    <div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent,#2F2DE4);">Synopsis</div>
+      <p style="font-size:18px;line-height:1.6;color:#222;margin:16px 0 0;max-width:48ch;">{{ project.synopsis }}</p>
+    </div>
+    <div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent,#2F2DE4);">Credits</div>
+      <div style="margin-top:14px;border-top:1px solid #e6e6e2;">
+        <sc-for list="{{ project.credits }}" as="c" hint-placeholder-count="5">
+          <div style="display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid #e6e6e2;font-family:'Space Mono',monospace;letter-spacing:.04em;text-transform:uppercase;">
+            <span style="font-size:12px;color:#9a9a9a;letter-spacing:.12em;">{{ c.k }}</span>
+            <span style="font-size:15px;color:#111;text-align:right;">{{ c.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:46px;">
+    <div style="font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent,#2F2DE4);">Stills</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px;">
+      <sc-for list="{{ stills }}" as="st" hint-placeholder-count="3">
+        <div style="height:180px;border-radius:10px;background:{{ st }};box-shadow:inset 0 0 0 1px rgba(255,255,255,.2);"></div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:52px;border-top:1.5px solid #111;padding-top:24px;">
+    <a href="{{ prevHref }}" style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:.1em;text-transform:uppercase;transition:color .2s;" style-hover="{ color: 'var(--accent,#2F2DE4)' }">← {{ prevTitle }}</a>
+    <a href="yujinsoffice.dc.html" style="font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#9a9a9a;">All Projects</a>
+    <a href="{{ nextHref }}" style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:.1em;text-transform:uppercase;text-align:right;transition:color .2s;" style-hover="{ color: 'var(--accent,#2F2DE4)' }">{{ nextTitle }} →</a>
+  </div>
+
+  </main>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:1300},&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#2F2DE4&quot;,&quot;options&quot;:[&quot;#2F2DE4&quot;,&quot;#111111&quot;,&quot;#c0392b&quot;,&quot;#1f8a5b&quot;],&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    this.projects = [
+      { slug:"twisted-scissors", title:"Twisted Scissors", year:"2026", type:"Short Film", runtime:"14:20", tone:0,
+        synopsis:"A barber's last night unravels one careful cut at a time. As the shop empties and the lights dim, every snip pulls loose a memory he'd rather leave on the floor.",
+        credits:[{k:"Director",v:"Yujin Kim"},{k:"Writer",v:"Yujin Kim"},{k:"Format",v:"16mm"},{k:"Aspect",v:"2.39 : 1"},{k:"Year",v:"2026"}] },
+      { slug:"the-mushroom", title:"The Mushroom", year:"2025", type:"Short Film", runtime:"09:48", tone:1,
+        synopsis:"Something quiet grows in the dark between two strangers sharing a basement apartment. A patient, near-wordless study of proximity, damp, and the slow turn toward each other.",
+        credits:[{k:"Director",v:"Yujin Kim"},{k:"Writer",v:"Yujin Kim"},{k:"Format",v:"Digital"},{k:"Aspect",v:"1.33 : 1"},{k:"Year",v:"2025"}] },
+      { slug:"living-under", title:"Living Under", year:"2019", type:"Short Film", runtime:"21:05", tone:2,
+        synopsis:"A year below ground, told in the light that gets in. Filmed across the seasons in a single semi-basement room, it traces a life measured by the window above the door.",
+        credits:[{k:"Director",v:"Yujin Kim"},{k:"Writer",v:"Yujin Kim"},{k:"Format",v:"Digital"},{k:"Aspect",v:"1.85 : 1"},{k:"Year",v:"2019"}] },
+      { slug:"recommendation", title:"Recommendation", year:"2018", type:"Short Film", runtime:"12:30", tone:0,
+        synopsis:"A quiet favor between colleagues curdles into obligation. An early short about the small debts we owe each other, and how quickly they compound.",
+        credits:[{k:"Director",v:"Yujin Kim"},{k:"Writer",v:"Yujin Kim"},{k:"Format",v:"Digital"},{k:"Aspect",v:"1.85 : 1"},{k:"Year",v:"2018"}] },
+      { slug:"narco-saints", title:"Narco Saints", year:"2022", type:"Netflix Series", runtime:"6 Episodes",  tone:1,
+        synopsis:"An ordinary businessman is pulled into a high-stakes government operation to take down a Korean drug lord operating in South America.",
+        credits:[{k:"Role",v:"Yujin Kim"},{k:"Studio",v:"Netflix"},{k:"Format",v:"Digital"},{k:"Episodes",v:"6"},{k:"Year",v:"2022"}] },
+      { slug:"ballerina", title:"Ballerina", year:"2023", type:"Netflix Film", runtime:"1:32", tone:2,
+        synopsis:"A former bodyguard sets out to keep a promise to a lost friend, carving a path of revenge through the people responsible.",
+        credits:[{k:"Role",v:"Yujin Kim"},{k:"Studio",v:"Netflix"},{k:"Format",v:"Digital"},{k:"Aspect",v:"2.39 : 1"},{k:"Year",v:"2023"}] },
+      { slug:"badland-hunters", title:"Badland Hunters", year:"2024", type:"Netflix Film", runtime:"1:47", tone:0,
+        synopsis:"In a ruined city after a massive earthquake, a fearless hunter fights to rescue a girl taken by a doctor with monstrous ambitions.",
+        credits:[{k:"Role",v:"Yujin Kim"},{k:"Studio",v:"Netflix"},{k:"Format",v:"Digital"},{k:"Aspect",v:"2.39 : 1"},{k:"Year",v:"2024"}] }
+    ];
+    let slug = "twisted-scissors";
+    try { const u = new URLSearchParams(window.location.search); if (u.get("p")) slug = u.get("p"); } catch(e){}
+    this.idx = Math.max(0, this.projects.findIndex(p => p.slug === slug));
+    if (this.idx < 0) this.idx = 0;
+  }
+
+  componentDidMount(){
+    if (this.props.accentColor && this.root) this.root.style.setProperty("--accent", this.props.accentColor);
+  }
+
+  grad(tone, shift){
+    const c = [["#2c2c2c","#6e6e6e"], ["#0d5d74","#189cc4"], ["#3a3a3a","#9b9b9b"]][tone];
+    const ang = 150 + (shift||0)*24;
+    return `radial-gradient(120% 85% at 30% 18%, rgba(255,255,255,.32), rgba(255,255,255,0) 48%), linear-gradient(${ang}deg, ${c[0]}, ${c[1]})`;
+  }
+
+  renderVals(){
+    const ps = this.projects, i = this.idx, p = ps[i];
+    const prev = ps[(i + ps.length - 1) % ps.length];
+    const next = ps[(i + 1) % ps.length];
+    return {
+      rootRef: (el) => { this.root = el; if (el && this.props.accentColor) el.style.setProperty("--accent", this.props.accentColor); },
+      project: { num: String(i+1).padStart(2,"0"), title: p.title, year: p.year, type: p.type, runtime: p.runtime, synopsis: p.synopsis, credits: p.credits, grad: this.grad(p.tone, 0), titleFs: (p.title.split(/\s+/).reduce((m,w)=>Math.max(m,w.length),0) >= 13 ? "clamp(42px,6.4vw,84px)" : "clamp(54px,9vw,120px)") },
+      stills: [this.grad(p.tone, 1), this.grad(p.tone, -1), this.grad(p.tone, 2)],
+      sprockets: Array.from({length:22}, (_,k)=>k),
+      prevHref: `Project.dc.html?p=${prev.slug}`, prevTitle: prev.title,
+      nextHref: `Project.dc.html?p=${next.slug}`, nextTitle: next.title
+    };
+  }
+}
+</script>
+</body>
+</html>

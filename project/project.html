@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project — yujinsoffice</title>
+  <meta name="description" content="Yujin Kim — Korean filmmaker & director">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #fff; }
+    body {
+      font-family: 'Space Mono', monospace;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    p { margin: 0; }
+    ::selection { background: #2F2DE4; color: #fff; }
+
+    /* ── Header ── */
+    .site-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 2px solid #111;
+      padding: 22px 36px 16px;
+    }
+    .brand {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: 103px;
+      letter-spacing: -.01em;
+      line-height: 1;
+    }
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 21px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .topnav .sep { opacity: .3; }
+    .topnav a { transition: color .2s; }
+    .topnav a:hover,
+    .topnav a.active { color: #2F2DE4; }
+    .topnav a.active { font-weight: 700; }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 46px 36px 64px;
+    }
+
+    /* ── Title row ── */
+    .title-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .now-showing {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: #2F2DE4;
+    }
+    .proj-h1 {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      line-height: .86;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      margin: 10px 0 0;
+    }
+    .proj-meta-right {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #222;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* ── Film frame ── */
+    .film-frame {
+      position: relative;
+      margin-top: 30px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+    }
+    .sprockets {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: rgba(0,0,0,.18);
+    }
+    .sprocket {
+      width: 11px;
+      height: 15px;
+      background: rgba(255,255,255,.85);
+      border-radius: 2px;
+    }
+    .film-screen {
+      height: 430px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .play-btn {
+      width: 74px; height: 74px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      padding-left: 5px;
+    }
+
+    /* ── Details grid ── */
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 48px;
+      margin-top: 46px;
+      align-items: start;
+    }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #2F2DE4;
+    }
+    .synopsis-text {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #222;
+      margin: 16px 0 0;
+      max-width: 48ch;
+    }
+    .credits-table { margin-top: 14px; border-top: 1px solid #e6e6e2; }
+    .credit-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid #e6e6e2;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .credit-key { font-size: 12px; color: #9a9a9a; letter-spacing: .12em; }
+    .credit-val { font-size: 15px; color: #111; text-align: right; }
+
+    /* ── Stills ── */
+    .stills-section { margin-top: 46px; }
+    .stills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .still {
+      height: 180px;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
+    }
+
+    /* ── Prev / Next ── */
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      margin-top: 52px;
+      border-top: 1.5px solid #111;
+      padding-top: 24px;
+    }
+    .nav-row a {
+      font-family: 'Space Mono', monospace;
+      font-size: 15px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-row a:hover { color: #2F2DE4; }
+    .nav-row .all { font-size: 13px; letter-spacing: .16em; color: #9a9a9a; }
+    .nav-row .next-link { text-align: right; }
+
+    /* ── Mobile ── */
+    @media (max-width: 720px) {
+      .site-head { flex-wrap: wrap; gap: 10px; padding: 16px 20px 12px; }
+      .brand { font-size: clamp(46px, 15vw, 80px); }
+      .topnav { font-size: 12px; gap: 9px; flex-wrap: wrap; }
+      main { padding: 28px 20px 48px; }
+      .title-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .details-grid { grid-template-columns: 1fr; gap: 32px; }
+      .stills-grid { grid-template-columns: 1fr 1fr; }
+      .film-screen { height: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-head">
+    <a href="index.html" class="brand">yujinsoffice</a>
+    <nav class="topnav">
+      <a href="about.html">About</a>
+      <span class="sep">/</span>
+      <a href="index.html" class="active">Projects</a>
+      <span class="sep">/</span>
+      <a href="upcoming.html">Upcoming</a>
+      <span class="sep">/</span>
+      <a href="shop.html">Shop</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Populated by JS -->
+  </main>
+
+  <script>
+  (function () {
+    var projects = [
+      {
+        slug: 'twisted-scissors', title: 'Twisted Scissors', year: '2026', type: 'Short Film', runtime: '14:20', tone: 0,
+        synopsis: "A barber's last night unravels one careful cut at a time. As the shop empties and the lights dim, every snip pulls loose a memory he'd rather leave on the floor.",
+        credits: [{ k: 'Director', v: 'Yujin Kim' }, { k: 'Writer', v: 'Yujin Kim' }, { k: 'Format', v: '16mm' }, { k: 'Aspect', v: '2.39 : 1' }, { k: 'Year', v: '2026' }]
+      },
+      {
+        slug: 'the-mushroom', title: 'The Mushroom', year: '2025', type: 'Short Film', runtime: '09:48', tone: 1,
+        synopsis: 'Something quiet grows in the dark between two strangers sharing a basement apartment. A patient, near-wordless study of proximity, damp, and the slow turn toward each other.',
+        credits: [{ k: 'Director', v: 'Yujin Kim' }, { k: 'Writer', v: 'Yujin Kim' }, { k: 'Format', v: 'Digital' }, { k: 'Aspect', v: '1.33 : 1' }, { k: 'Year', v: '2025' }]
+      },
+      {
+        slug: 'living-under', title: 'Living Under', year: '2019', type: 'Short Film', runtime: '21:05', tone: 2,
+        synopsis: 'A year below ground, told in the light that gets in. Filmed across the seasons in a single semi-basement room, it traces a life measured by the window above the door.',
+        credits: [{ k: 'Director', v: 'Yujin Kim' }, { k: 'Writer', v: 'Yujin Kim' }, { k: 'Format', v: 'Digital' }, { k: 'Aspect', v: '1.85 : 1' }, { k: 'Year', v: '2019' }]
+      },
+      {
+        slug: 'recommendation', title: 'Recommendation', year: '2018', type: 'Short Film', runtime: '12:30', tone: 0,
+        synopsis: 'A quiet favor between colleagues curdles into obligation. An early short about the small debts we owe each other, and how quickly they compound.',
+        credits: [{ k: 'Director', v: 'Yujin Kim' }, { k: 'Writer', v: 'Yujin Kim' }, { k: 'Format', v: 'Digital' }, { k: 'Aspect', v: '1.85 : 1' }, { k: 'Year', v: '2018' }]
+      },
+      {
+        slug: 'narco-saints', title: 'Narco Saints', year: '2022', type: 'Netflix Series', runtime: '6 Episodes', tone: 1,
+        synopsis: 'An ordinary businessman is pulled into a high-stakes government operation to take down a Korean drug lord operating in South America.',
+        credits: [{ k: 'Role', v: 'Assistant Director' }, { k: 'Studio', v: 'Netflix / Zium Content' }, { k: 'Format', v: 'Digital' }, { k: 'Episodes', v: '6' }, { k: 'Year', v: '2022' }]
+      },
+      {
+        slug: 'ballerina', title: 'Ballerina', year: '2023', type: 'Netflix Film', runtime: '1:32', tone: 2,
+        synopsis: 'A former bodyguard sets out to keep a promise to a lost friend, carving a path of revenge through the people responsible.',
+        credits: [{ k: 'Role', v: 'Assistant Director' }, { k: 'Studio', v: 'Netflix / Lewis Pictures' }, { k: 'Format', v: 'Digital' }, { k: 'Aspect', v: '2.39 : 1' }, { k: 'Year', v: '2023' }]
+      },
+      {
+        slug: 'badland-hunters', title: 'Badland Hunters', year: '2024', type: 'Netflix Film', runtime: '1:47', tone: 0,
+        synopsis: 'In a ruined city after a massive earthquake, a fearless hunter fights to rescue a girl taken by a doctor with monstrous ambitions.',
+        credits: [{ k: 'Role', v: 'VFX Project Manager' }, { k: 'Studio', v: 'Netflix / Lewis Pictures' }, { k: 'Format', v: 'Digital' }, { k: 'Aspect', v: '2.39 : 1' }, { k: 'Year', v: '2024' }]
+      }
+    ];
+
+    function grad(tone, shift) {
+      var c = [['#2c2c2c','#6e6e6e'], ['#0d5d74','#189cc4'], ['#3a3a3a','#9b9b9b']][tone];
+      var ang = 150 + (shift || 0) * 24;
+      return 'radial-gradient(120% 85% at 30% 18%, rgba(255,255,255,.32), rgba(255,255,255,0) 48%), linear-gradient(' + ang + 'deg, ' + c[0] + ', ' + c[1] + ')';
+    }
+
+    function sprocketsHTML() {
+      var h = '';
+      for (var i = 0; i < 22; i++) h += '<div class="sprocket"></div>';
+      return h;
+    }
+
+    // Find current project from URL
+    var slug = 'twisted-scissors';
+    try { var u = new URLSearchParams(window.location.search); if (u.get('p')) slug = u.get('p'); } catch(e){}
+    var idx = Math.max(0, projects.findIndex(function (p) { return p.slug === slug; }));
+    if (idx < 0) idx = 0;
+    var p    = projects[idx];
+    var prev = projects[(idx + projects.length - 1) % projects.length];
+    var next = projects[(idx + 1) % projects.length];
+
+    // Update page title
+    document.title = p.title + ' — yujinsoffice';
+
+    // Compute title font size
+    var maxWord = p.title.split(/\s+/).reduce(function (m, w) { return Math.max(m, w.length); }, 0);
+    var titleFs = maxWord >= 13 ? 'clamp(42px,6.4vw,84px)' : 'clamp(54px,9vw,120px)';
+
+    // Credits HTML
+    var creditsHTML = p.credits.map(function (c) {
+      return '<div class="credit-row"><span class="credit-key">' + c.k + '</span><span class="credit-val">' + c.v + '</span></div>';
+    }).join('');
+
+    // Stills HTML
+    var stillsHTML = [grad(p.tone, 1), grad(p.tone, -1), grad(p.tone, 2)].map(function (g) {
+      return '<div class="still" style="background:' + g + '"></div>';
+    }).join('');
+
+    document.getElementById('main').innerHTML =
+      '<div class="title-row">' +
+        '<div>' +
+          '<div class="now-showing">Now Showing &nbsp;·&nbsp; Project ' + String(idx + 1).padStart(2, '0') + '</div>' +
+          '<h1 class="proj-h1" style="font-size:' + titleFs + '">' + p.title + '</h1>' +
+        '</div>' +
+        '<div class="proj-meta-right">' + p.year + ' &nbsp;·&nbsp; ' + p.type + ' &nbsp;·&nbsp; ' + p.runtime + '</div>' +
+      '</div>' +
+
+      '<div class="film-frame" style="background:' + grad(p.tone, 0) + '">' +
+        '<div class="sprockets">' + sprocketsHTML() + '</div>' +
+        '<div class="film-screen"><div class="play-btn">►</div></div>' +
+        '<div class="sprockets">' + sprocketsHTML() + '</div>' +
+      '</div>' +
+
+      '<div class="details-grid">' +
+        '<div>' +
+          '<div class="section-label">Synopsis</div>' +
+          '<p class="synopsis-text">' + p.synopsis + '</p>' +
+        '</div>' +
+        '<div>' +
+          '<div class="section-label">Credits</div>' +
+          '<div class="credits-table">' + creditsHTML + '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="stills-section">' +
+        '<div class="section-label">Stills</div>' +
+        '<div class="stills-grid">' + stillsHTML + '</div>' +
+      '</div>' +
+
+      '<div class="nav-row">' +
+        '<a href="project.html?p=' + prev.slug + '">← ' + prev.title + '</a>' +
+        '<a href="index.html" class="all">All Projects</a>' +
+        '<a href="project.html?p=' + next.slug + '" class="next-link">' + next.title + ' →</a>' +
+      '</div>';
+  })();
+  </script>
+
+</body>
+</html>

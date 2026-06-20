@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>yujinsoffice</title>
+  <meta name="description" content="Yujin Kim — Korean filmmaker & director. Short films, Netflix productions, MFA FSU.">
+  <meta property="og:title" content="yujinsoffice">
+  <meta property="og:description" content="Yujin Kim — Korean filmmaker & director">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #111;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding: 22px 36px 18px;
+    }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: #2F2DE4; color: #fff; }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      padding-bottom: 14px;
+      border-bottom: 2px solid #111;
+      flex: none;
+    }
+    .brand {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: 103px;
+      letter-spacing: -.01em;
+      line-height: 1;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      align-items: baseline;
+      gap: clamp(20px, 2.8vw, 40px);
+      padding-top: 12px;
+      flex: none;
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: clamp(34px, 5.2vw, 68px);
+      line-height: 1;
+      letter-spacing: -.01em;
+    }
+    nav a { color: #111; transition: color .2s; }
+    nav a:hover { color: #2F2DE4; }
+    nav a.active { color: #2F2DE4; }
+
+    /* ── Reel section ── */
+    .reel-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+    }
+    .reel {
+      position: relative;
+      width: min(72vmin, calc(100vh - 330px), 820px);
+      height: min(72vmin, calc(100vh - 330px), 820px);
+      flex: none;
+      touch-action: none;
+      user-select: none;
+      cursor: grab;
+    }
+
+    /* ── Plate ── */
+    .plate {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, #232320 0 27%, #181816 27% 92%, #0a0a08 92% 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.06),
+        inset 0 0 120px rgba(0,0,0,.55),
+        0 50px 100px -36px rgba(0,0,0,.55);
+      will-change: transform;
+    }
+    .hub {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 30%; height: 30%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 50% 50%, #2b2b28 0 62%, #1a1a18 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.07), inset 0 0 30px rgba(0,0,0,.5);
+    }
+    .top-nub {
+      position: absolute;
+      top: 1.4%; left: 50%;
+      transform: translateX(-50%);
+      width: 6.5%; height: 2.6%;
+      background: #cdccc8;
+      border-radius: 0 0 7px 7px;
+    }
+
+    /* ── Window layer ── */
+    .layer {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+    .win {
+      position: absolute;
+      left: 50%; top: 50%;
+      overflow: hidden;
+      cursor: pointer;
+      will-change: transform;
+    }
+    .win-role {
+      position: absolute;
+      top: 8px; left: 9px; right: 9px;
+      font-family: 'Space Mono', monospace;
+      line-height: 1.12;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .win-num {
+      position: absolute;
+      bottom: 6px; right: 8px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: .06em;
+    }
+
+    /* ── Center display ── */
+    .center-display {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      width: 52%;
+      text-align: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .now-viewing-label {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(10px, 1.4vmin, 14px);
+      letter-spacing: .34em;
+      text-transform: uppercase;
+      color: #c9c9c9;
+    }
+    .proj-title {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      line-height: .95;
+      text-transform: uppercase;
+      letter-spacing: -.005em;
+      color: #fff;
+      margin-top: clamp(8px, 1.4vmin, 16px);
+    }
+    .proj-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(10px, 1.3vmin, 13px);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #c9c9c9;
+      margin-top: clamp(8px, 1.4vmin, 14px);
+    }
+    .view-btn {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: clamp(14px, 2vmin, 22px);
+      padding: 11px 22px;
+      background: #2F2DE4;
+      border: 2px solid #2F2DE4;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(10px, 1.2vmin, 13px);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #fff;
+      transition: opacity .2s;
+    }
+    .view-btn:hover { opacity: .85; }
+
+    /* ── Footer ── */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex: none;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(9px, 1.1vmin, 12px);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      padding-top: 10px;
+      border-top: 1px solid #e6e6e2;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 600px) {
+      body { padding: 14px 18px 12px; overflow: auto; height: auto; }
+      .brand { font-size: clamp(46px, 15vw, 80px); }
+      nav { font-size: clamp(22px, 7vw, 40px); gap: 14px; }
+      .reel { width: min(88vw, 88vw); height: min(88vw, 88vw); }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="brand">yujinsoffice</a>
+  </header>
+
+  <nav>
+    <a href="about.html">about</a>
+    <a href="index.html" class="active">projects</a>
+    <a href="upcoming.html">upcoming</a>
+    <a href="shop.html">shop</a>
+  </nav>
+
+  <section class="reel-section">
+    <div class="reel" id="reel">
+      <div class="plate" id="plate">
+        <div class="hub"></div>
+        <div class="top-nub"></div>
+      </div>
+      <div class="layer" id="layer"></div>
+      <div class="center-display">
+        <div class="now-viewing-label">Now Viewing</div>
+        <div class="proj-title" id="proj-title"></div>
+        <div class="proj-meta"  id="proj-meta"></div>
+        <a class="view-btn" id="view-btn" href="">View Project →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Seoul, Korea</span>
+    <span>Drag the reel · tap a frame</span>
+    <span id="reel-label">Reel 01 / 07</span>
+  </footer>
+
+  <script>
+  (function () {
+    var projects = [
+      { slug: 'twisted-scissors', title: 'Twisted Scissors', year: '2026', type: 'Short Film',    runtime: '14:20',      tone: 0 },
+      { slug: 'the-mushroom',     title: 'The Mushroom',     year: '2025', type: 'Short Film',    runtime: '09:48',      tone: 1 },
+      { slug: 'living-under',     title: 'Living Under',     year: '2019', type: 'Short Film',    runtime: '21:05',      tone: 2 },
+      { slug: 'recommendation',   title: 'Recommendation',   year: '2018', type: 'Short Film',    runtime: '12:30',      tone: 0 },
+      { slug: 'narco-saints',     title: 'Narco Saints',     year: '2022', type: 'Netflix Series', runtime: '6 Episodes', tone: 1 },
+      { slug: 'ballerina',        title: 'Ballerina',        year: '2023', type: 'Netflix Film',  runtime: '1:32',       tone: 2 },
+      { slug: 'badland-hunters',  title: 'Badland Hunters',  year: '2024', type: 'Netflix Film',  runtime: '1:47',       tone: 0 }
+    ];
+    var roleMap = {
+      'twisted-scissors': 'Writer · Director',
+      'the-mushroom':     'Writer · Director',
+      'living-under':     'Writer · Director',
+      'recommendation':   'Writer · Director',
+      'narco-saints':     'AD Dept.',
+      'ballerina':        'AD Dept.',
+      'badland-hunters':  'VFX PM'
+    };
+    var fills     = ['#f2f1ee', '#aeadaa', '#5e5d5a'];
+    var numColors = ['rgba(20,20,18,.5)', 'rgba(20,20,18,.5)', 'rgba(255,255,255,.72)'];
+
+    var WIN = projects.length;
+    var ACTIVE = 1.14, IDLE = 0.9, SPEED = 0.1;
+
+    var reelEl  = document.getElementById('reel');
+    var plateEl = document.getElementById('plate');
+    var layerEl = document.getElementById('layer');
+    var titleEl = document.getElementById('proj-title');
+    var metaEl  = document.getElementById('proj-meta');
+    var btnEl   = document.getElementById('view-btn');
+    var labelEl = document.getElementById('reel-label');
+
+    var R = 232, winSize = 92;
+    var theta = 0, target = 0;
+    var mode = 'auto', dragged = false, active = 0, holdTimer = null;
+    var cx = 0, cy = 0, startAng = 0, startTheta = 0;
+
+    var baseAngles = projects.map(function (_, i) { return i * (360 / WIN) - 90; });
+
+    /* ── Build windows ── */
+    var winEls = projects.map(function (p, i) {
+      var el = document.createElement('div');
+      el.className = 'win';
+      el.style.background = fills[p.tone];
+
+      var role = document.createElement('div');
+      role.className = 'win-role';
+      role.style.color = numColors[p.tone];
+      role.textContent = roleMap[p.slug] || '';
+
+      var num = document.createElement('div');
+      num.className = 'win-num';
+      num.style.color = numColors[p.tone];
+      num.textContent = String(i + 1).padStart(2, '0');
+
+      el.appendChild(role);
+      el.appendChild(num);
+      el.addEventListener('click', (function (idx) {
+        return function () { if (!dragged) selectProject(idx); };
+      })(i));
+      layerEl.appendChild(el);
+      return el;
+    });
+
+    /* ── Build tab nubs ── */
+    var tabEls = Array.from({ length: WIN }, function () {
+      var tab = document.createElement('div');
+      tab.style.cssText = 'position:absolute;left:50%;top:50%;background:#fcfcfb;border-radius:2px;box-shadow:0 1px 4px rgba(0,0,0,.16);';
+      plateEl.appendChild(tab);
+      return tab;
+    });
+
+    function layout() {
+      var size = reelEl.clientWidth;
+      if (!size) return;
+      R = size * 0.375;
+      winSize = size * 0.15;
+      var half = winSize / 2;
+      var rPx   = (size * 0.018) + 'px';
+      var roleFs = Math.min(10, Math.max(7, size * 0.0098)) + 'px';
+      var numFs  = Math.min(11, Math.max(8, size  * 0.01))  + 'px';
+
+      winEls.forEach(function (el) {
+        el.style.width        = winSize + 'px';
+        el.style.height       = winSize + 'px';
+        el.style.margin       = '-' + half + 'px 0 0 -' + half + 'px';
+        el.style.borderRadius = rPx;
+        el.querySelector('.win-role').style.fontSize = roleFs;
+        el.querySelector('.win-num').style.fontSize  = numFs;
+      });
+
+      var tw = size * 0.022, th = size * 0.045, tr = size * 0.47;
+      tabEls.forEach(function (tab, i) {
+        tab.style.width   = tw + 'px';
+        tab.style.height  = th + 'px';
+        tab.style.margin  = '-' + (th/2) + 'px 0 0 -' + (tw/2) + 'px';
+        tab.style.transform = 'rotate(' + (i * (360/WIN) + (180/WIN)) + 'deg) translateY(' + (-tr) + 'px)';
+      });
+
+      renderPositions();
+    }
+
+    function norm(d) { return ((d + 180) % 360 + 360) % 360 - 180; }
+
+    function renderPositions() {
+      plateEl.style.transform = 'rotate(' + theta + 'deg)';
+
+      var topIdx = 0, best = 1e9;
+      for (var i = 0; i < WIN; i++) {
+        var d = Math.abs(norm(-90 - (baseAngles[i] + theta)));
+        if (d < best) { best = d; topIdx = i; }
+      }
+
+      winEls.forEach(function (el, i) {
+        var a = (baseAngles[i] + theta) * Math.PI / 180;
+        var x = R * Math.cos(a), y = R * Math.sin(a);
+        var isActive = (i === topIdx);
+        el.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + (isActive ? ACTIVE : IDLE) + ')';
+        el.style.zIndex    = isActive ? '6' : '1';
+        el.style.opacity   = isActive ? '1' : '0.72';
+        el.style.boxShadow = isActive
+          ? 'inset 0 0 0 2px #fff, 0 0 0 2px #2F2DE4, 0 14px 30px rgba(0,0,0,.30)'
+          : 'inset 0 0 0 2px rgba(255,255,255,.82), 0 6px 14px rgba(0,0,0,.16)';
+      });
+
+      if (topIdx !== active && mode !== 'snap') {
+        active = topIdx;
+        updateCenter();
+      }
+    }
+
+    function updateCenter() {
+      var p = projects[active];
+      var maxWord = p.title.split(/\s+/).reduce(function (m, w) { return Math.max(m, w.length); }, 0);
+      titleEl.textContent       = p.title;
+      titleEl.style.fontSize    = maxWord >= 13 ? 'clamp(26px,3.9vmin,46px)' : 'clamp(32px,5.4vmin,64px)';
+      metaEl.textContent        = p.year + ' · ' + p.type + ' · ' + p.runtime;
+      btnEl.href                = 'project.html?p=' + p.slug;
+      labelEl.textContent       = 'Reel ' + String(active + 1).padStart(2, '0') + ' / ' + String(WIN).padStart(2, '0');
+    }
+
+    function loop() {
+      if (mode === 'auto') {
+        theta -= SPEED;
+      } else if (mode === 'snap') {
+        var d = target - theta;
+        if (Math.abs(d) < 0.15) {
+          theta = target; mode = 'hold';
+          clearTimeout(holdTimer);
+          holdTimer = setTimeout(function () { if (mode === 'hold') mode = 'auto'; }, 1700);
+        } else {
+          theta += d * 0.16;
+        }
+      }
+      renderPositions();
+      requestAnimationFrame(loop);
+    }
+
+    function snapTo(idx) { target = theta + norm(-90 - (baseAngles[idx] + theta)); mode = 'snap'; }
+    function snapNearest() {
+      var idx = 0, best = 1e9;
+      for (var i = 0; i < WIN; i++) {
+        var d = Math.abs(norm(-90 - (baseAngles[i] + theta)));
+        if (d < best) { best = d; idx = i; }
+      }
+      snapTo(idx);
+    }
+    function selectProject(i) { active = i; snapTo(i); updateCenter(); }
+
+    /* ── Pointer drag ── */
+    reelEl.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('a')) return;
+      mode = 'drag'; dragged = false;
+      var r = reelEl.getBoundingClientRect();
+      cx = r.left + r.width / 2; cy = r.top + r.height / 2;
+      startAng   = Math.atan2(e.clientY - cy, e.clientX - cx);
+      startTheta = theta;
+      reelEl.style.cursor = 'grabbing';
+      reelEl.setPointerCapture(e.pointerId);
+    });
+    reelEl.addEventListener('pointermove', function (e) {
+      if (mode !== 'drag') return;
+      var a = Math.atan2(e.clientY - cy, e.clientX - cx);
+      var delta = (a - startAng) * 180 / Math.PI;
+      if (Math.abs(delta) > 3) dragged = true;
+      theta = startTheta + delta;
+    });
+    reelEl.addEventListener('pointerup', function () {
+      reelEl.style.cursor = 'grab';
+      setTimeout(function () { dragged = false; }, 0);
+      snapNearest();
+    });
+
+    /* ── Init ── */
+    layout();
+    window.addEventListener('resize', layout);
+    updateCenter();
+    requestAnimationFrame(function () { layerEl.style.opacity = '1'; });
+    requestAnimationFrame(loop);
+  })();
+  </script>
+
+</body>
+</html>
