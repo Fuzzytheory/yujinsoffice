@@ -293,16 +293,66 @@
     @media (max-width: 680px) {
       .site-head {
         flex-wrap: wrap;
-        gap: 10px;
-        padding: 16px 20px 12px;
+        gap: 8px;
+        padding: 12px 16px 10px;
       }
-      .brand { font-size: clamp(46px, 15vw, 80px); }
-      .topnav { font-size: 12px; gap: 9px; flex-wrap: wrap; }
-      main { padding: 32px 20px 56px; }
-      .three-col { flex-direction: column; }
-      .booth-col,
-      .portrait-col { max-width: 100%; }
-      .intro-col { align-self: auto; }
+      .brand { font-size: clamp(40px, 10.5vw, 64px); }
+      .topnav { font-size: 11px; gap: 6px; }
+      .topnav .sep { margin: 0 1px; }
+
+      main { padding: 0 0 56px; }
+
+      .three-col {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      /* Photobooth: fixed-height hero, edge-to-edge */
+      .booth-col {
+        max-width: 100%;
+        width: 100%;
+        flex: none;
+      }
+      .stage {
+        height: 46vh;
+        padding-bottom: 0; /* override the aspect-ratio padding trick */
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      /* Bio + contact: padded content section */
+      .intro-col {
+        align-self: auto;
+        padding: 24px 20px 0;
+        gap: 28px;
+      }
+      .eyebrow { font-size: 11px; }
+      .tags { margin-top: 14px; gap: 8px; font-size: 11px; }
+      .tag, .tag-hl { padding: 5px 10px; }
+      .bio {
+        margin-top: 20px;
+        font-size: 16px;
+        line-height: 1.65;
+        gap: 16px;
+      }
+
+      /* Contact: stacked, full-width button */
+      .inq-heading { font-size: 11px; }
+      .inq-row {
+        flex-direction: column;
+        gap: 16px;
+        align-items: stretch;
+      }
+      .contact-block { min-width: 0; flex: none; }
+      .contact-email { font-size: 20px; }
+      .btn-touch {
+        text-align: center;
+        padding: 16px;
+        width: 100%;
+      }
+
+      /* Portrait: hide on mobile — photobooth already provides the visual */
+      .portrait-col { display: none; }
     }
   </style>
 </head>

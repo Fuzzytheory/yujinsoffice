@@ -128,11 +128,16 @@
     .film-screen-embed {
       position: relative;
       width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      overflow: hidden;
     }
     .film-screen-embed iframe {
+      position: absolute;
+      top: 0; left: 0;
       display: block;
       width: 100%;
-      height: 500px;
+      height: 100%;
       border: 0;
     }
     .play-btn {
@@ -336,14 +341,42 @@
 
     /* ── Mobile ── */
     @media (max-width: 720px) {
-      .site-head { flex-wrap: wrap; gap: 10px; padding: 16px 20px 12px; }
-      .brand { font-size: clamp(46px, 15vw, 80px); }
-      .topnav { font-size: 12px; gap: 9px; flex-wrap: wrap; }
-      main { padding: 28px 20px 48px; }
-      .title-row { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .details-grid { grid-template-columns: 1fr; gap: 32px; }
-      .stills-grid { grid-template-columns: 1fr 1fr; }
-      .film-screen { height: 240px; }
+      .site-head { flex-wrap: wrap; gap: 8px; padding: 12px 16px 10px; }
+      .brand { font-size: clamp(40px, 10.5vw, 64px); }
+      .topnav { font-size: 11px; gap: 6px; }
+      main { padding: 20px 16px 48px; }
+
+      .title-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+      .proj-meta-right {
+        text-align: left;
+        font-size: 11px;
+        white-space: normal;
+      }
+      .tagline { font-size: 11px; }
+      .film-frame { border-radius: 8px; margin-top: 16px; }
+      .sprockets { padding: 6px 10px; }
+      .sprocket { width: 9px; height: 12px; }
+
+      /* Fallback screen (no embed) */
+      .film-screen { height: 200px; }
+      .film-screen-btn { height: 200px; }
+
+      .details-grid { grid-template-columns: 1fr; gap: 28px; margin-top: 28px; }
+      .synopsis-text { font-size: 15px; line-height: 1.6; }
+      .credit-row { padding: 9px 0; }
+      .credit-key { font-size: 10px; }
+      .credit-val { font-size: 13px; }
+
+      .festivals-section { margin-top: 28px; }
+      .festival-badge { font-size: 10px; padding: 6px 10px; }
+
+      .stills-section { margin-top: 32px; }
+      .stills-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .still { height: 110px; border-radius: 6px; }
+
+      .nav-row { margin-top: 36px; padding-top: 16px; gap: 12px; }
+      .nav-row a { font-size: 11px; }
+      .nav-row .next-link { text-align: right; }
     }
   </style>
 </head>

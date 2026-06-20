@@ -208,10 +208,29 @@
 
     /* ── Mobile ── */
     @media (max-width: 600px) {
-      body { padding: 14px 18px 12px; overflow: auto; height: auto; }
-      .brand { font-size: clamp(46px, 15vw, 80px); }
-      nav { font-size: clamp(22px, 7vw, 40px); gap: 14px; }
-      .reel { width: 88vw; height: 88vw; }
+      body {
+        padding: 12px 16px 8px;
+        height: 100dvh;
+        height: 100vh; /* fallback for older browsers */
+        overflow: hidden;
+      }
+      .brand { font-size: clamp(42px, 12vw, 68px); }
+      nav {
+        font-size: clamp(18px, 5.5vw, 28px);
+        gap: 10px;
+        padding-top: 8px;
+      }
+      .reel-section { min-height: 0; }
+      footer {
+        font-size: 8px;
+        letter-spacing: .16em;
+        padding-top: 8px;
+      }
+    }
+    @supports (height: 100dvh) {
+      @media (max-width: 600px) {
+        body { height: 100dvh; }
+      }
     }
   </style>
 </head>
@@ -326,10 +345,14 @@
 
     function layout() {
       // JS-driven sizing — reliable across all browsers
-      var bh = document.body.clientHeight || window.innerHeight;
       var bw = document.body.clientWidth  || window.innerWidth;
-      var maxH = Math.max(bh - 270, 200);
-      var maxW = Math.max(bw * 0.72, 200);
+      var isMobile = bw <= 600;
+      // use window.innerHeight on mobile so 100dvh body doesn't confuse clientHeight
+      var bh = isMobile ? window.innerHeight : (document.body.clientHeight || window.innerHeight);
+      var overhead = isMobile ? 148 : 270;
+      var widthRatio = isMobile ? 0.88 : 0.72;
+      var maxH = Math.max(bh - overhead, 200);
+      var maxW = Math.max(bw * widthRatio, 200);
       var sz   = Math.min(maxH, maxW, 820);
       reelEl.style.width  = sz + 'px';
       reelEl.style.height = sz + 'px';
