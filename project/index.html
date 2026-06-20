@@ -74,8 +74,8 @@
     }
     .reel {
       position: relative;
-      width: min(72vmin, calc(100vh - 330px), 820px);
-      height: min(72vmin, calc(100vh - 330px), 820px);
+      width: 600px;
+      height: 600px;
       flex: none;
       touch-action: none;
       user-select: none;
@@ -214,7 +214,7 @@
       body { padding: 14px 18px 12px; overflow: auto; height: auto; }
       .brand { font-size: clamp(46px, 15vw, 80px); }
       nav { font-size: clamp(22px, 7vw, 40px); gap: 14px; }
-      .reel { width: min(88vw, 88vw); height: min(88vw, 88vw); }
+      .reel { width: 88vw; height: 88vw; }
     }
   </style>
 </head>
@@ -328,6 +328,15 @@
     });
 
     function layout() {
+      // JS-driven sizing — reliable across all browsers
+      var bh = document.body.clientHeight || window.innerHeight;
+      var bw = document.body.clientWidth  || window.innerWidth;
+      var maxH = Math.max(bh - 270, 200);
+      var maxW = Math.max(bw * 0.72, 200);
+      var sz   = Math.min(maxH, maxW, 820);
+      reelEl.style.width  = sz + 'px';
+      reelEl.style.height = sz + 'px';
+
       var size = reelEl.clientWidth;
       if (!size) return;
       R = size * 0.375;
