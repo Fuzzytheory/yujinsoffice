@@ -125,6 +125,16 @@
       align-items: center;
       justify-content: center;
     }
+    .film-screen-embed {
+      position: relative;
+      width: 100%;
+    }
+    .film-screen-embed iframe {
+      display: block;
+      width: 100%;
+      height: 500px;
+      border: 0;
+    }
     .play-btn {
       width: 74px; height: 74px;
       border-radius: 50%;
@@ -389,6 +399,7 @@
       {
         slug: 'living-under', title: 'Living Under', year: '2020', type: 'Short Film', runtime: '26:50', tone: 2,
         genre: 'Drama', rating: 'PG-13',
+        youtubeId: 'wxq-6JURZPY',
         stills: ['stills/Living under still1.jpg','stills/Living under still2.jpg','stills/Living under still3.jpg','stills/Living under still4.jpg','stills/Living under still5.jpg','stills/Living under still6.jpg','stills/Living under still7.jpg'],
         festivals: ['Seoul Independent Film Festival 2020 (46th) — Short Competition, World Premiere'],
         synopsis: "Jina is hiding a secret that could change her life, and a father who's about to ruin it. One night, her best friend visits, and the truth about Jina's poverty comes out the hard way.",
@@ -471,7 +482,12 @@
           return '<div class="still" style="background:' + g + '"></div>';
         }).join('');
 
-    var filmScreen = p.vimeoId
+    var filmScreen = p.youtubeId
+      ? '<div class="film-screen-embed">' +
+          '<iframe src="https://www.youtube.com/embed/' + p.youtubeId + '?rel=0&modestbranding=1&color=white" ' +
+          'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+        '</div>'
+      : p.vimeoId
       ? '<div class="film-screen-btn">' +
           '<a class="watch-btn" href="https://vimeo.com/' + p.vimeoId + '" target="_blank" rel="noopener" ' +
              'onclick="var el=this;el.classList.add(\'pressed\');setTimeout(function(){el.classList.remove(\'pressed\');},400);">' +
