@@ -391,7 +391,48 @@
   <script>
     (function () {
       var el = document.querySelector('.filmstrip');
-      if (!el || typeof el.animate !== 'function') return;
+      var slot = document.querySelector('.strip-slot');
+      if (!el || !slot) return;
+
+      /* ── Tune mode: ?tune shows sliders to find correct values ── */
+      if (location.search.indexOf('tune') !== -1) {
+        var panel = document.createElement('div');
+        panel.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;font-family:monospace;font-size:13px;padding:16px 20px;border-radius:8px;z-index:9999;display:flex;flex-direction:column;gap:10px;min-width:300px;box-shadow:0 8px 32px rgba(0,0,0,.5)';
+        function row(label, id, val, min, max, step) {
+          return '<label style="display:flex;justify-content:space-between;gap:12px;align-items:center;">' +
+            '<span style="width:110px">' + label + ': <b id="v-'+id+'">'+val+'</b></span>' +
+            '<input id="s-'+id+'" type="range" min="'+min+'" max="'+max+'" step="'+step+'" value="'+val+'" style="flex:1">' +
+            '</label>';
+        }
+        panel.innerHTML =
+          '<div style="margin-bottom:4px;letter-spacing:.1em;text-transform:uppercase;color:#2F2DE4">Filmstrip Tuner</div>' +
+          row('slot top %',    'st',  33, 20, 55, 0.5) +
+          row('slot height %', 'sh',  62, 30, 75, 0.5) +
+          row('strip top %',   'ft',   0,  0, 15, 0.5) +
+          row('strip left %',  'fl', 37.4, 25, 55, 0.5) +
+          row('strip width %', 'fw', 26.9, 15, 45, 0.5) +
+          '<div style="margin-top:4px;opacity:.6;font-size:11px">Tell Claude these numbers ↑</div>';
+        document.body.appendChild(panel);
+        function apply() {
+          var st = document.getElementById('s-st').value;
+          var sh = document.getElementById('s-sh').value;
+          var ft = document.getElementById('s-ft').value;
+          var fl = document.getElementById('s-fl').value;
+          var fw = document.getElementById('s-fw').value;
+          slot.style.top    = st + '%';
+          slot.style.height = sh + '%';
+          el.style.top   = ft + '%';
+          el.style.left  = fl + '%';
+          el.style.width = fw + '%';
+          ['st','sh','ft','fl','fw'].forEach(function(k){ document.getElementById('v-'+k).textContent = document.getElementById('s-'+k).value; });
+          el.style.transform = 'translateY(0)';
+        }
+        ['st','sh','ft','fl','fw'].forEach(function(k){ document.getElementById('s-'+k).addEventListener('input', apply); });
+        apply();
+        return; /* skip animation in tune mode */
+      }
+
+      if (typeof el.animate !== 'function') return;
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
       el.animate([
         { offset: 0,    transform: 'translateY(-124%) rotate(0deg)',   easing: 'cubic-bezier(.4,0,.7,.45)' },
