@@ -302,57 +302,68 @@
 
       main { padding: 0 0 56px; }
 
+      /* Photo pair: photobooth + portrait side by side as hero */
       .three-col {
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         gap: 0;
+        align-items: flex-start;
       }
-
-      /* Photobooth: fixed-height hero, edge-to-edge */
       .booth-col {
-        max-width: 100%;
-        width: 100%;
-        flex: none;
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+        min-width: 0;
+        order: 1;
       }
       .stage {
-        height: 46vh;
-        padding-bottom: 0; /* override the aspect-ratio padding trick */
-        box-shadow: none;
         border-radius: 0;
+        box-shadow: none;
+        /* keep padding-bottom: 176.9% — correct aspect ratio at 50% width */
       }
 
-      /* Bio + contact: padded content section */
-      .intro-col {
+      .portrait-col {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        flex: 0 0 50%;
+        max-width: 50%;
+        min-width: 0;
+        order: 2;
         align-self: auto;
-        padding: 24px 20px 0;
-        gap: 28px;
+      }
+      .portrait-col figure { margin: 0; display: flex; flex-direction: column; }
+      .portrait-wrap {
+        border-radius: 0;
+        box-shadow: none;
+        /* padding-bottom: 176.9% matches stage at same 50% width */
+      }
+      figcaption {
+        padding: 6px 10px 4px;
+        font-size: 9px;
+        letter-spacing: .1em;
+      }
+
+      /* Bio + contact: full width below the photo pair */
+      .intro-col {
+        width: 100%;
+        flex: 0 0 100%;
+        order: 3;
+        align-self: auto;
+        padding: 28px 20px 0;
+        gap: 36px;
       }
       .eyebrow { font-size: 11px; }
       .tags { margin-top: 14px; gap: 8px; font-size: 11px; }
       .tag, .tag-hl { padding: 5px 10px; }
-      .bio {
-        margin-top: 20px;
-        font-size: 16px;
-        line-height: 1.65;
-        gap: 16px;
-      }
+      .bio { margin-top: 20px; font-size: 16px; line-height: 1.65; gap: 16px; }
 
-      /* Contact: stacked, full-width button */
+      /* Direct Inquiries */
       .inq-heading { font-size: 11px; }
-      .inq-row {
-        flex-direction: column;
-        gap: 16px;
-        align-items: stretch;
-      }
+      .inq-row { flex-direction: column; gap: 16px; align-items: stretch; }
       .contact-block { min-width: 0; flex: none; }
       .contact-email { font-size: 20px; }
-      .btn-touch {
-        text-align: center;
-        padding: 16px;
-        width: 100%;
-      }
-
-      /* Portrait: hide on mobile — photobooth already provides the visual */
-      .portrait-col { display: none; }
+      .btn-touch { text-align: center; padding: 16px; width: 100%; }
     }
   </style>
 </head>
