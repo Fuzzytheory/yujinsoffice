@@ -339,6 +339,80 @@
     .nav-row .all { font-size: 13px; letter-spacing: .16em; color: #9a9a9a; }
     .nav-row .next-link { text-align: right; }
 
+    /* ── Lightbox ── */
+    .lb {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.93);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+    .lb.open { opacity: 1; pointer-events: auto; }
+    .lb-img {
+      max-width: 88vw;
+      max-height: 86vh;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+      border-radius: 2px;
+    }
+    .lb-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1.5px solid rgba(255,255,255,.28);
+      color: #fff;
+      font-size: 22px;
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      line-height: 1;
+    }
+    .lb-btn:hover { border-color: rgba(255,255,255,.8); background: rgba(255,255,255,.07); }
+    .lb-prev { left: 28px; }
+    .lb-next { right: 28px; }
+    .lb-close {
+      position: absolute;
+      top: 22px; right: 28px;
+      background: none;
+      border: none;
+      color: rgba(255,255,255,.55);
+      font-size: 32px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0;
+      transition: color .15s;
+    }
+    .lb-close:hover { color: #fff; }
+    .lb-counter {
+      position: absolute;
+      bottom: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.4);
+      white-space: nowrap;
+    }
+    @media (max-width: 720px) {
+      .lb-btn { width: 40px; height: 40px; font-size: 18px; }
+      .lb-prev { left: 10px; }
+      .lb-next { right: 10px; }
+      .lb-img { max-width: 94vw; max-height: 82vh; }
+    }
+
     /* ── Mobile ── */
     @media (max-width: 720px) {
       .site-head { flex-wrap: wrap; gap: 8px; padding: 12px 16px 10px; }
@@ -399,6 +473,14 @@
     <!-- Populated by JS -->
   </main>
 
+  <div class="lb" id="lb">
+    <button class="lb-close" id="lb-close">×</button>
+    <button class="lb-btn lb-prev" id="lb-prev">‹</button>
+    <img class="lb-img" id="lb-img" src="" alt="">
+    <button class="lb-btn lb-next" id="lb-next">›</button>
+    <div class="lb-counter" id="lb-counter"></div>
+  </div>
+
   <script>
   (function () {
     var projects = [
@@ -458,8 +540,8 @@
         synopsis: 'A top high school student needs one recommendation letter his teacher refuses to give. Digging into why, he uncovers her secret study group — where she disciplines students with physical punishment — and finds his own girlfriend among them. So he turns what he saw into leverage.',
         credits: [
           { k: 'Writer / Director', v: 'Yujin Kim' },
-          { k: 'Producer', v: 'Jieun Kim' },
-          { k: 'Cinematographer', v: 'Jongho Park' },
+          { k: 'Producer', v: 'Ji-eon Kim' },
+          { k: 'Director of Photography', v: 'Jongho Park' },
           { k: 'Sound Designer', v: 'Taeyong Kim' },
           { k: 'Editor', v: 'Yujin Kim' },
           { k: 'Format', v: 'Digital' },
@@ -590,6 +672,42 @@
         '<a href="index.html" class="all">All Projects</a>' +
         '<a href="project.html?p=' + next.slug + '" class="next-link">' + next.title + ' →</a>' +
       '</div>';
+
+    // Lightbox
+    if (p.stills && p.stills.length) {
+      var lbEl      = document.getElementById('lb');
+      var lbImgEl   = document.getElementById('lb-img');
+      var lbCounter = document.getElementById('lb-counter');
+      var lbCur     = 0;
+
+      function lbShow(idx) {
+        lbCur = (idx + p.stills.length) % p.stills.length;
+        lbImgEl.src = p.stills[lbCur];
+        lbCounter.textContent = (lbCur + 1) + ' / ' + p.stills.length;
+        lbEl.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function lbHide() {
+        lbEl.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.getElementById('lb-close').addEventListener('click', lbHide);
+      document.getElementById('lb-prev').addEventListener('click', function () { lbShow(lbCur - 1); });
+      document.getElementById('lb-next').addEventListener('click', function () { lbShow(lbCur + 1); });
+      lbEl.addEventListener('click', function (e) { if (e.target === lbEl) lbHide(); });
+      document.addEventListener('keydown', function (e) {
+        if (!lbEl.classList.contains('open')) return;
+        if (e.key === 'Escape')      lbHide();
+        if (e.key === 'ArrowLeft')   lbShow(lbCur - 1);
+        if (e.key === 'ArrowRight')  lbShow(lbCur + 1);
+      });
+
+      document.querySelectorAll('.still-photo').forEach(function (el, i) {
+        el.style.cursor = 'pointer';
+        el.addEventListener('click', function () { lbShow(i); });
+      });
+    }
   })();
   </script>
 
