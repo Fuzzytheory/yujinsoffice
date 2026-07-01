@@ -233,6 +233,8 @@
       scrollbar-width: none;
       -ms-overflow-style: none;
       cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
     }
     .photo-strip::-webkit-scrollbar { display: none; }
     .photo-strip.grabbing { cursor: grabbing; }
@@ -577,44 +579,49 @@
     });
 
     // ── Auto-scrolling marquee: drifts right-to-left, pauses on hover/drag ──
+    // NOTE: no setPointerCapture — capturing the pointer suppresses the child
+    // photo-frame's click event and breaks the lightbox. Drag uses window listeners.
     document.querySelectorAll('.photo-strip').forEach(function (strip) {
-      var paused = false, speed = 0.45;
-      var dragging = false, startX = 0, startScroll = 0;
+      var speed = 0.45;
+      var hovering = false, dragging = false, touching = false;
+      var startX = 0, startScroll = 0, resumeTimer = null;
 
-      strip.addEventListener('mouseenter', function () { paused = true; });
-      strip.addEventListener('mouseleave', function () { dragging = false; strip.classList.remove('grabbing'); paused = false; });
+      function isPaused() { return hovering || dragging || touching; }
+
+      strip.addEventListener('mouseenter', function () { hovering = true; });
+      strip.addEventListener('mouseleave', function () { hovering = false; });
 
       strip.addEventListener('pointerdown', function (e) {
-        paused = true;
         strip._dragged = false;
         if (e.pointerType === 'mouse') {
           dragging = true;
           startX = e.clientX;
           startScroll = strip.scrollLeft;
           strip.classList.add('grabbing');
-          strip.setPointerCapture(e.pointerId);
+        } else {
+          touching = true;
+          clearTimeout(resumeTimer);
         }
       });
-      strip.addEventListener('pointermove', function (e) {
+      window.addEventListener('pointermove', function (e) {
         if (!dragging) return;
         var dx = e.clientX - startX;
         if (Math.abs(dx) > 4) strip._dragged = true;
         strip.scrollLeft = startScroll - dx;
       });
-      function endDrag(e) {
-        if (e.pointerType === 'mouse') {
+      window.addEventListener('pointerup', function (e) {
+        if (dragging && e.pointerType === 'mouse') {
           dragging = false;
           strip.classList.remove('grabbing');
-        } else {
-          setTimeout(function () { paused = false; }, 900);  // touch: resume after a beat
+          setTimeout(function () { strip._dragged = false; }, 0);
         }
-        setTimeout(function () { strip._dragged = false; }, 0);
-      }
-      strip.addEventListener('pointerup', endDrag);
-      strip.addEventListener('pointercancel', endDrag);
+        if (touching && e.pointerType !== 'mouse') {
+          resumeTimer = setTimeout(function () { touching = false; }, 900);
+        }
+      });
 
       function tick() {
-        if (!paused) {
+        if (!isPaused()) {
           strip.scrollLeft += speed;
           var half = strip.scrollWidth / 2;                 // second (duplicate) copy starts here
           if (half > 0 && strip.scrollLeft >= half) strip.scrollLeft -= half;
