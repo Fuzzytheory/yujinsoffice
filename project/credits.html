@@ -82,6 +82,7 @@
       text-transform: uppercase;
       margin: 12px 0 8px;
     }
+    #blocks { margin-top: 44px; }
     .page-intro {
       font-size: 14px;
       line-height: 1.6;
@@ -220,13 +221,21 @@
     .onset { margin-top: 34px; }
     .photo-strip {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 10px;
       margin-top: 14px;
       padding: 16px 14px;
       background: #0d0d0d;
       border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: auto;      /* override global smooth scroll for the marquee */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
     }
+    .photo-strip::-webkit-scrollbar { display: none; }
+    .photo-strip.grabbing { cursor: grabbing; }
     .photo-frame {
       position: relative;
       height: 156px;
@@ -236,6 +245,7 @@
       background: #000;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
     }
+    .photo-frame img { pointer-events: none; }
     .photo-frame img {
       height: 100%;
       width: auto;
@@ -376,6 +386,7 @@
       .credit-val { font-size: 13px; }
       .back-row { flex-direction: column; align-items: flex-start; gap: 10px; }
       .back-row a { font-size: 12px; }
+      #blocks { margin-top: 28px; }
       .onset { margin-top: 26px; }
       .photo-strip { gap: 7px; padding: 12px 10px; }
       .photo-frame { height: 116px; }
@@ -492,11 +503,13 @@
           '</div>' +
           ((c.photos && c.photos.length)
             ? '<div class="onset">' +
-                '<div class="section-label">On Set</div>' +
+                '<div class="section-label">Photo Dump!</div>' +
                 '<div class="photo-strip">' +
-                  c.photos.map(function (src, i) {
-                    return '<div class="photo-frame" data-proj="' + ci + '" data-i="' + i + '">' +
-                             '<img src="' + src + '" loading="lazy" alt="On set — ' + c.title + '">' +
+                  c.photos.concat(c.photos).map(function (src, k) {
+                    var i = k % c.photos.length;
+                    return '<div class="photo-frame" data-proj="' + ci + '" data-i="' + i + '"' +
+                           (k >= c.photos.length ? ' aria-hidden="true"' : '') + '>' +
+                             '<img src="' + src + '" loading="lazy" alt="Photo dump — ' + c.title + '">' +
                            '</div>';
                   }).join('') +
                 '</div>' +
@@ -555,10 +568,60 @@
 
     document.querySelectorAll('.photo-frame').forEach(function (el) {
       el.addEventListener('click', function () {
+        var strip = el.closest('.photo-strip');
+        if (strip && strip._dragged) return;      // was a drag, not a tap
         var proj = credits[+el.getAttribute('data-proj')];
         lbSet = (proj && proj.photos) || [];
         lbShow(+el.getAttribute('data-i'));
       });
+    });
+
+    // ── Auto-scrolling marquee: drifts right-to-left, pauses on hover/drag ──
+    document.querySelectorAll('.photo-strip').forEach(function (strip) {
+      var paused = false, speed = 0.45;
+      var dragging = false, startX = 0, startScroll = 0;
+
+      strip.addEventListener('mouseenter', function () { paused = true; });
+      strip.addEventListener('mouseleave', function () { dragging = false; strip.classList.remove('grabbing'); paused = false; });
+
+      strip.addEventListener('pointerdown', function (e) {
+        paused = true;
+        strip._dragged = false;
+        if (e.pointerType === 'mouse') {
+          dragging = true;
+          startX = e.clientX;
+          startScroll = strip.scrollLeft;
+          strip.classList.add('grabbing');
+          strip.setPointerCapture(e.pointerId);
+        }
+      });
+      strip.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - startX;
+        if (Math.abs(dx) > 4) strip._dragged = true;
+        strip.scrollLeft = startScroll - dx;
+      });
+      function endDrag(e) {
+        if (e.pointerType === 'mouse') {
+          dragging = false;
+          strip.classList.remove('grabbing');
+        } else {
+          setTimeout(function () { paused = false; }, 900);  // touch: resume after a beat
+        }
+        setTimeout(function () { strip._dragged = false; }, 0);
+      }
+      strip.addEventListener('pointerup', endDrag);
+      strip.addEventListener('pointercancel', endDrag);
+
+      function tick() {
+        if (!paused) {
+          strip.scrollLeft += speed;
+          var half = strip.scrollWidth / 2;                 // second (duplicate) copy starts here
+          if (half > 0 && strip.scrollLeft >= half) strip.scrollLeft -= half;
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
     });
   })();
   </script>
