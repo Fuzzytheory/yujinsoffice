@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crew Credits — yujinsoffice</title>
+  <meta name="description" content="Yujin Kim — crew credits on Netflix productions">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #fff; scroll-behavior: smooth; }
+    body {
+      font-family: 'Space Mono', monospace;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a { color: inherit; text-decoration: none; }
+    p { margin: 0; }
+    ::selection { background: #2F2DE4; color: #fff; }
+
+    /* ── Header ── */
+    .site-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 2px solid #111;
+      padding: 22px 36px 16px;
+    }
+    .brand {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: 103px;
+      letter-spacing: -.01em;
+      line-height: 1;
+    }
+    .topnav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 21px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .topnav .sep { opacity: .3; }
+    .topnav a { transition: color .2s; }
+    .topnav a:hover,
+    .topnav a.active { color: #2F2DE4; }
+    .topnav a.active { font-weight: 700; }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 46px 36px 40px;
+    }
+    .page-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: #2F2DE4;
+    }
+    .page-heading {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: clamp(48px, 7vw, 96px);
+      line-height: .9;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      margin: 12px 0 8px;
+    }
+    .page-intro {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #666;
+      max-width: 60ch;
+      margin-bottom: 8px;
+    }
+
+    /* ── Credit block ── */
+    .credit-block {
+      border-top: 2px solid #111;
+      padding: 44px 0 8px;
+      scroll-margin-top: 90px;
+    }
+    .credit-block.flash .cb-title { animation: flash 1.4s ease; }
+    @keyframes flash {
+      0%, 100% { color: #111; }
+      25%, 60% { color: #2F2DE4; }
+    }
+    .cb-eyebrow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+    }
+    .role-badge {
+      color: #fff;
+      background: #2F2DE4;
+      padding: 5px 11px;
+      letter-spacing: .16em;
+    }
+    .cb-title {
+      font-family: 'Helvetica Neue', 'Archivo Narrow', sans-serif;
+      font-stretch: condensed;
+      font-weight: 700;
+      font-size: clamp(40px, 6.4vw, 92px);
+      line-height: .9;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      margin: 14px 0 2px;
+      transition: color .2s;
+    }
+    .cb-type {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 26px;
+    }
+
+    /* ── Film frame (trailer) ── */
+    .film-frame {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+    .sprockets {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: #000;
+    }
+    .sprocket {
+      width: 11px;
+      height: 15px;
+      background: rgba(255,255,255,.85);
+      border-radius: 2px;
+    }
+    .film-screen-embed {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+    .film-screen-embed iframe {
+      position: absolute;
+      top: 0; left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* ── Detail grid ── */
+    .cb-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 48px;
+      margin-top: 30px;
+      align-items: start;
+    }
+    .section-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #2F2DE4;
+    }
+    .cb-did {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #222;
+      margin: 14px 0 0;
+      max-width: 50ch;
+    }
+    .cb-dates {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      margin-top: 16px;
+    }
+    .credits-table { margin-top: 14px; border-top: 1px solid #e6e6e2; }
+    .credit-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid #e6e6e2;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .credit-key { font-size: 12px; color: #9a9a9a; letter-spacing: .12em; }
+    .credit-val { font-size: 15px; color: #111; text-align: right; }
+
+    /* ── Back row ── */
+    .back-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      margin-top: 12px;
+      border-top: 2px solid #111;
+      padding: 24px 0 0;
+    }
+    .back-row a {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    .back-row a:hover { color: #2F2DE4; }
+
+    /* ── Footer ── */
+    footer {
+      background: #111;
+      color: #fff;
+      padding: 28px 36px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    footer .dim { opacity: .55; }
+
+    /* ── Mobile ── */
+    @media (max-width: 720px) {
+      .site-head { flex-wrap: wrap; gap: 8px; padding: 12px 16px 10px; }
+      .brand { font-size: clamp(40px, 10.5vw, 64px); }
+      .topnav { font-size: 11px; gap: 6px; }
+      main { padding: 24px 16px 40px; }
+      .page-heading { font-size: clamp(40px, 12vw, 64px); }
+      .credit-block { padding: 32px 0 6px; scroll-margin-top: 70px; }
+      .film-frame { border-radius: 8px; }
+      .sprockets { padding: 6px 10px; }
+      .sprocket { width: 9px; height: 12px; }
+      .cb-grid { grid-template-columns: 1fr; gap: 22px; margin-top: 22px; }
+      .cb-did { font-size: 15px; }
+      .credit-key { font-size: 10px; }
+      .credit-val { font-size: 13px; }
+      .back-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .back-row a { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-head">
+    <a href="index.html" class="brand">yujinsoffice</a>
+    <nav class="topnav">
+      <a href="about.html">About</a>
+      <span class="sep">/</span>
+      <a href="index.html" class="active">Projects</a>
+      <span class="sep">/</span>
+      <a href="upcoming.html">Upcoming</a>
+      <span class="sep">/</span>
+      <a href="shop.html">Shop</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="page-eyebrow">Crew Credits</div>
+    <h1 class="page-heading">On&nbsp;Set</h1>
+    <p class="page-intro">Selected work as crew on feature and series productions — assistant director and VFX project management. Not directed by me.</p>
+    <div id="blocks"><!-- populated by JS --></div>
+    <div class="back-row">
+      <a href="index.html">← All Projects</a>
+      <a href="about.html">About Yujin →</a>
+    </div>
+  </main>
+
+  <footer>
+    <span>yujinsoffice</span>
+    <span class="dim">© 2026 — Filmmaker &amp; Director, Seoul</span>
+  </footer>
+
+  <script>
+  (function () {
+    var credits = [
+      {
+        slug: 'narco-saints', title: 'Narco-Saints', type: 'Netflix Original Series',
+        role: 'AD Dept.', dates: '2022.05 – 2022.10', youtubeId: '1MTIrScpSPU',
+        director: 'Yoon Jong-bin', studio: 'Perfect Storm Film', runtime: '6 Episodes',
+        did: 'Managed video village and maintained English call sheets and continuity boards for the international crew.'
+      },
+      {
+        slug: 'ballerina', title: 'Ballerina', type: 'Netflix Original Film',
+        role: 'AD Dept.', dates: '2022.05 – 2022.10', youtubeId: 'IhXfUTGVEUI',
+        director: 'Lee Chung-hyun', studio: 'Climax Studio', runtime: '1h 34m',
+        did: 'Managed video village and slate duties on set.'
+      },
+      {
+        slug: 'badland-hunters', title: 'Badland Hunters', type: 'Netflix Original Film',
+        role: 'VFX PM · Studio Vird', dates: '2023.02 – 2024.05', youtubeId: 'hKbo-ZKdSqw',
+        director: 'Heo Myung-haeng', studio: 'Climax Studio', runtime: '1h 48m',
+        did: 'As VFX Project Manager at Studio Vird, handled multiple film and series titles — facilitating communication between production executives, directors, and VFX artists, coordinating schedules, and tracking project progress. Other main title: Love in the Big City.'
+      }
+    ];
+
+    function sprocketsHTML() {
+      var h = '';
+      for (var i = 0; i < 22; i++) h += '<div class="sprocket"></div>';
+      return h;
+    }
+
+    var html = credits.map(function (c) {
+      return '' +
+        '<section class="credit-block" id="' + c.slug + '">' +
+          '<div class="cb-eyebrow"><span class="role-badge">' + c.role + '</span> · ' + c.dates + '</div>' +
+          '<h2 class="cb-title">' + c.title + '</h2>' +
+          '<div class="cb-type">' + c.type + '</div>' +
+          '<div class="film-frame">' +
+            '<div class="sprockets">' + sprocketsHTML() + '</div>' +
+            '<div class="film-screen-embed">' +
+              '<iframe src="https://www.youtube.com/embed/' + c.youtubeId + '?rel=0&modestbranding=1&color=white" ' +
+              'frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+            '</div>' +
+            '<div class="sprockets">' + sprocketsHTML() + '</div>' +
+          '</div>' +
+          '<div class="cb-grid">' +
+            '<div>' +
+              '<div class="section-label">What I Did</div>' +
+              '<p class="cb-did">' + c.did + '</p>' +
+              '<div class="cb-dates">' + c.dates + '</div>' +
+            '</div>' +
+            '<div>' +
+              '<div class="section-label">Specs</div>' +
+              '<div class="credits-table">' +
+                '<div class="credit-row"><span class="credit-key">Director</span><span class="credit-val">' + c.director + '</span></div>' +
+                '<div class="credit-row"><span class="credit-key">Production</span><span class="credit-val">' + c.studio + '</span></div>' +
+                '<div class="credit-row"><span class="credit-key">Running Time</span><span class="credit-val">' + c.runtime + '</span></div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</section>';
+    }).join('');
+
+    document.getElementById('blocks').innerHTML = html;
+
+    // Scroll to and highlight the selected project from the URL hash
+    function focusHash() {
+      var slug = (window.location.hash || '').replace('#', '');
+      if (!slug) return;
+      var el = document.getElementById(slug);
+      if (!el) return;
+      el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      el.classList.remove('flash');
+      void el.offsetWidth; // restart animation
+      el.classList.add('flash');
+    }
+    // slight delay so layout (and iframes) settle before centering
+    setTimeout(focusHash, 60);
+    window.addEventListener('hashchange', focusHash);
+  })();
+  </script>
+
+</body>
+</html>

@@ -417,11 +417,14 @@
 
     function updateCenter() {
       var p = projects[active];
+      var crewSlugs = ['narco-saints', 'ballerina', 'badland-hunters'];
       var maxWord = p.title.split(/\s+/).reduce(function (m, w) { return Math.max(m, w.length); }, 0);
       titleEl.textContent       = p.title;
       titleEl.style.fontSize    = maxWord >= 13 ? 'clamp(26px,3.9vmin,46px)' : 'clamp(32px,5.4vmin,64px)';
       metaEl.textContent        = p.year + ' · ' + p.type + ' · ' + p.runtime;
-      btnEl.href                = 'project.html?p=' + p.slug;
+      btnEl.href                = crewSlugs.indexOf(p.slug) >= 0
+                                    ? 'credits.html#' + p.slug
+                                    : 'project.html?p=' + p.slug;
       labelEl.textContent       = 'Reel ' + String(active + 1).padStart(2, '0') + ' / ' + String(WIN).padStart(2, '0');
     }
 

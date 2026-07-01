@@ -578,9 +578,17 @@
       return h;
     }
 
+    // Crew credits live on the combined page, not here
+    var crewSlugs = ['narco-saints', 'ballerina', 'badland-hunters'];
+    function hrefFor(s) {
+      return crewSlugs.indexOf(s) >= 0 ? 'credits.html#' + s : 'project.html?p=' + s;
+    }
+
     // Find current project from URL
     var slug = 'twisted-scissors';
     try { var u = new URLSearchParams(window.location.search); if (u.get('p')) slug = u.get('p'); } catch(e){}
+    // Crew projects redirect to the combined credits page
+    if (crewSlugs.indexOf(slug) >= 0) { window.location.replace('credits.html#' + slug); return; }
     var idx = Math.max(0, projects.findIndex(function (p) { return p.slug === slug; }));
     if (idx < 0) idx = 0;
     var p    = projects[idx];
@@ -668,9 +676,9 @@
       '</div>' +
 
       '<div class="nav-row">' +
-        '<a href="project.html?p=' + prev.slug + '">← ' + prev.title + '</a>' +
+        '<a href="' + hrefFor(prev.slug) + '">← ' + prev.title + '</a>' +
         '<a href="index.html" class="all">All Projects</a>' +
-        '<a href="project.html?p=' + next.slug + '" class="next-link">' + next.title + ' →</a>' +
+        '<a href="' + hrefFor(next.slug) + '" class="next-link">' + next.title + ' →</a>' +
       '</div>';
 
     // Lightbox
