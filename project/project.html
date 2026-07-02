@@ -280,42 +280,61 @@
       font-size: 13px;
     }
 
-    /* ── Stills ── */
+    /* ── Stills (auto-scrolling strip) ── */
     .stills-section { margin-top: 46px; }
-    .stills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+    .photo-strip {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 12px;
       margin-top: 14px;
+      padding: 16px 14px;
+      background: #0d0d0d;
+      border-radius: 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: auto;      /* override any smooth scroll for the marquee */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
     }
-    .stills-5 { grid-template-columns: repeat(3, 1fr); }
-    .stills-5 .still:nth-child(4),
-    .stills-5 .still:nth-child(5) { grid-column: span 1; }
-    .still {
-      height: 180px;
-      border-radius: 10px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
-    }
-    .still-photo {
+    .photo-strip::-webkit-scrollbar { display: none; }
+    .photo-strip.grabbing { cursor: grabbing; }
+    .photo-frame {
+      position: relative;
+      height: 200px;
+      flex: 0 0 auto;
       overflow: hidden;
-      background: #111;
+      cursor: pointer;
+      background: #000;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.14);
     }
-    .still-photo img {
-      width: 100%;
+    .photo-frame img {
       height: 100%;
-      object-fit: cover;
+      width: auto;
       display: block;
-      transition: transform .4s ease;
+      pointer-events: none;
+      transition: transform .4s ease, opacity .3s ease;
     }
-    .still-photo img:hover { transform: scale(1.04); }
+    .photo-frame::after {
+      content: '⤢';
+      position: absolute;
+      right: 8px; bottom: 6px;
+      font-size: 13px;
+      color: #fff;
+      opacity: 0;
+      transition: opacity .2s;
+      text-shadow: 0 1px 4px rgba(0,0,0,.8);
+    }
+    .photo-frame:hover img { transform: scale(1.05); opacity: .9; }
+    .photo-frame:hover::after { opacity: .9; }
 
-    /* 5-stills layout */
-    .stills-grid:has(.still:nth-child(5)) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .stills-grid:has(.still:nth-child(5)) .still:nth-child(4),
-    .stills-grid:has(.still:nth-child(5)) .still:nth-child(5) {
-      grid-column: span 1;
+    /* gradient fallback tiles when a project has no photo stills */
+    .still {
+      height: 200px;
+      flex: 0 0 320px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.2);
     }
 
     /* ── Prev / Next ── */
@@ -445,8 +464,9 @@
       .festival-badge { font-size: 10px; padding: 6px 10px; }
 
       .stills-section { margin-top: 32px; }
-      .stills-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .still { height: 110px; border-radius: 6px; }
+      .photo-strip { gap: 8px; padding: 12px 10px; }
+      .photo-frame { height: 150px; }
+      .still { height: 150px; flex-basis: 240px; }
 
       .nav-row { margin-top: 36px; padding-top: 16px; gap: 12px; }
       .nav-row a { font-size: 11px; }
@@ -616,14 +636,22 @@
       return '<div class="credit-row"><span class="credit-key">' + c.k + '</span><span class="credit-val">' + c.v + '</span></div>';
     }).join('');
 
-    // Stills HTML
-    var stillsHTML = (p.stills && p.stills.length)
-      ? p.stills.map(function (src) {
-          return '<div class="still still-photo"><img src="' + src + '" alt="Still from ' + p.title + '"></div>';
-        }).join('')
-      : [grad(p.tone, 1), grad(p.tone, -1), grad(p.tone, 2)].map(function (g) {
-          return '<div class="still" style="background:' + g + '"></div>';
-        }).join('');
+    // Stills strip (duplicated for a seamless marquee loop) — hidden if none
+    var stillsSection = '';
+    if (p.stills && p.stills.length) {
+      var frames = p.stills.concat(p.stills).map(function (src, k) {
+        var i = k % p.stills.length;
+        return '<div class="photo-frame" data-i="' + i + '"' +
+               (k >= p.stills.length ? ' aria-hidden="true"' : '') + '>' +
+                 '<img src="' + src + '" loading="lazy" alt="Still from ' + p.title + '">' +
+               '</div>';
+      }).join('');
+      stillsSection =
+        '<div class="stills-section">' +
+          '<div class="section-label">Stills</div>' +
+          '<div class="photo-strip">' + frames + '</div>' +
+        '</div>';
+    }
 
     var filmScreen = p.youtubeId
       ? '<div class="film-screen-embed">' +
@@ -679,10 +707,7 @@
 
       festivalsHTML +
 
-      '<div class="stills-section">' +
-        '<div class="section-label">Stills</div>' +
-        '<div class="stills-grid">' + stillsHTML + '</div>' +
-      '</div>' +
+      stillsSection +
 
       '<div class="nav-row">' +
         '<a href="' + hrefFor(prev.slug) + '">← ' + prev.title + '</a>' +
@@ -690,7 +715,7 @@
         '<a href="' + hrefFor(next.slug) + '" class="next-link">' + next.title + ' →</a>' +
       '</div>';
 
-    // Lightbox
+    // Lightbox + marquee
     if (p.stills && p.stills.length) {
       var lbEl      = document.getElementById('lb');
       var lbImgEl   = document.getElementById('lb-img');
@@ -720,9 +745,79 @@
         if (e.key === 'ArrowRight')  lbShow(lbCur + 1);
       });
 
-      document.querySelectorAll('.still-photo').forEach(function (el, i) {
-        el.style.cursor = 'pointer';
-        el.addEventListener('click', function () { lbShow(i); });
+      // Swipe left/right inside the lightbox (mobile)
+      var tsx = 0, tsy = 0;
+      lbEl.addEventListener('touchstart', function (e) {
+        var t = e.changedTouches[0]; tsx = t.clientX; tsy = t.clientY;
+      }, { passive: true });
+      lbEl.addEventListener('touchend', function (e) {
+        var t = e.changedTouches[0], dx = t.clientX - tsx, dy = t.clientY - tsy;
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+          lbShow(dx < 0 ? lbCur + 1 : lbCur - 1);
+        } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10 && e.target === lbEl) {
+          lbHide();
+        }
+      }, { passive: true });
+
+      // Open from a strip frame (guard against drag)
+      document.querySelectorAll('.photo-frame').forEach(function (el) {
+        el.addEventListener('click', function () {
+          var strip = el.closest('.photo-strip');
+          if (strip && strip._dragged) return;
+          lbShow(+el.getAttribute('data-i'));
+        });
+      });
+
+      // Auto-scrolling marquee: drifts right-to-left, pauses on hover/drag.
+      // No setPointerCapture — it would swallow the frame's click event.
+      document.querySelectorAll('.photo-strip').forEach(function (strip) {
+        var speed = 0.45;
+        var hovering = false, dragging = false, touching = false;
+        var startX = 0, startScroll = 0, resumeTimer = null;
+
+        function isPaused() { return hovering || dragging || touching; }
+
+        strip.addEventListener('mouseenter', function () { hovering = true; });
+        strip.addEventListener('mouseleave', function () { hovering = false; });
+
+        strip.addEventListener('pointerdown', function (e) {
+          strip._dragged = false;
+          if (e.pointerType === 'mouse') {
+            dragging = true;
+            startX = e.clientX;
+            startScroll = strip.scrollLeft;
+            strip.classList.add('grabbing');
+          } else {
+            touching = true;
+            clearTimeout(resumeTimer);
+          }
+        });
+        window.addEventListener('pointermove', function (e) {
+          if (!dragging) return;
+          var dx = e.clientX - startX;
+          if (Math.abs(dx) > 4) strip._dragged = true;
+          strip.scrollLeft = startScroll - dx;
+        });
+        window.addEventListener('pointerup', function (e) {
+          if (dragging && e.pointerType === 'mouse') {
+            dragging = false;
+            strip.classList.remove('grabbing');
+            setTimeout(function () { strip._dragged = false; }, 0);
+          }
+          if (touching && e.pointerType !== 'mouse') {
+            resumeTimer = setTimeout(function () { touching = false; }, 900);
+          }
+        });
+
+        function tick() {
+          if (!isPaused()) {
+            strip.scrollLeft += speed;
+            var half = strip.scrollWidth / 2;
+            if (half > 0 && strip.scrollLeft >= half) strip.scrollLeft -= half;
+          }
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
       });
     }
   })();

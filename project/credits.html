@@ -568,6 +568,20 @@
       if (e.key === 'ArrowRight') lbShow(lbCur + 1);
     });
 
+    // Swipe left/right inside the lightbox (mobile)
+    var tsx = 0, tsy = 0;
+    lbEl.addEventListener('touchstart', function (e) {
+      var t = e.changedTouches[0]; tsx = t.clientX; tsy = t.clientY;
+    }, { passive: true });
+    lbEl.addEventListener('touchend', function (e) {
+      var t = e.changedTouches[0], dx = t.clientX - tsx, dy = t.clientY - tsy;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+        lbShow(dx < 0 ? lbCur + 1 : lbCur - 1);
+      } else if (Math.abs(dx) < 10 && Math.abs(dy) < 10 && e.target === lbEl) {
+        lbHide();
+      }
+    }, { passive: true });
+
     document.querySelectorAll('.photo-frame').forEach(function (el) {
       el.addEventListener('click', function () {
         var strip = el.closest('.photo-strip');
